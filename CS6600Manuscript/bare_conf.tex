@@ -113,6 +113,10 @@
 
 
 \usepackage{url}
+\usepackage[fleqn]{amsmath}
+\usepackage{algorithm,algpseudocode}
+
+
 % *** GRAPHICS RELATED PACKAGES ***
 %
 \ifCLASSINFOpdf
@@ -390,11 +394,123 @@ Robot motion is stochastic and not deterministic. A robot does not faithfully ex
 
 \section{Introduction}
 % no \IEEEPARstart
-\subsection{The platform}
+\subsection{The robot platform}
 The robot used for this implementation is based on a Raspberry Pi and is manufactured and sold by Dexter Industries \cite{dexter}. The robot is equipped with an ultrasonic sensor that is capable of measuring distances accurately to 250 cm. The sensor is mounted on a servo mechanism that can point the sensor in any direction ahead of the robot. The robot moves through use of two wheels that can be independently controlled by motors. Each wheel has an encoder using which the robot can issue commands for a wheel to move a fixed number of steps. The robot also has a third castor wheel that can move in any direction, but is not powered. The robot will be given commands to make it move and it can sense its surroundings using the ultrasonic sensor.
 \subsection{EKF SLAM}
-A Kalman filter is a gaussian filter algorithm that can use two gaussian distributions for a computed value and merge them together to form a distribution that has lesser variance than either of the two distributions. A Kalman filter however only works in the case of systems where the mechanics are linear. This is where the Extended Kalman Filter (EKF) comes in. \\
+A Kalman filter is a gaussian filter algorithm that can use two gaussian distributions for a computed value and merge them together to form a distribution that has lesser variance than either of the two distributions. A Kalman filter however only works in the case of systems where the mechanics are linear. This is where the Extended Kalman Filter (EKF) comes in. An EKF uses an approximation to find the resultant distribution after a prior dostribution is transformed by a non-linear function.\\
 
+The robot will compute its expected position based on its position and the movement command. It will also make independent measurements of its position using sensors. These two measurements will be combined through use of an EKF in such a way that the position uncertainty is reduced. The Kalman Gain or the reduction in the robot position uncertainty is inversely proportional to the sensor uncertainty. The better the sensor, the higher will be the Kalman Gain and the less uncertainty there will be in the robot position\cite{stachniss}.
+
+\section{Problem description}
+\subsection{The Bayes Filter}
+
+The Bayes Filter is an algorithm used for calculating beliefs{thrun}. In our case it is the belief of the robot position. This algorithm is used to compute the belief probability distribution $bel$ from measurement and control data. The measurement data is obtained from sensors and the control data is obtained from the robot command or telemetry. 
+
+Bayes Rule says that
+
+\begin{equation}\label{BayesRule}
+p(x|y) = \frac{p(y|x) p(x)}{p(y)}
+\end{equation}
+
+Since the denominator in Bayes Rule does not depend on $x$, the factor $\frac{1}{p(y)}$ can be written as $\eta$. So Bayes Rule in \ref{BayesRule} can be written as
+
+\begin{equation}\label{BayesRuleEta}
+p(x|y) = \eta p(y|x) p(x)
+\end{equation}
+
+Bayes Rule \ref{BayesRule} can also be written as 
+
+\begin{equation}\label{BayesRuleCondZ}
+p(x|y,z) = \frac{p(y|x,z) p(x|z)}{p(y|z)}
+\end{equation}
+
+as long as $p(y|z)>0$.\\
+
+Applying \ref{BayesRuleCondZ} on the robot position $x_t$ gives us
+
+\begin{equation}\label{TargetPosterior}
+\begin{aligned}
+p(x_t|z_{1:t},u_{1:t}) &= \frac{p(z_t|x_t,z_{1:t-1},u_{1:t}) p(x_t|z_{1:t-1},u_{1:t})}{p(z_t|z_{1:t-1},u_{1:t})}\\
+& = \eta p(z_t|x_t,z_{1:t-1},u_{1:t}) p(x_t|z_{1:t-1},u_{1:t})\\
+\end{aligned}
+\end{equation}
+
+Since the measurement $z_t$ depends on position $x_t$ and any past measurement $z_{1:t}$ or command $u_{1:t} $ does not provide any additional information on the measurement, we can say that
+
+\begin{equation}\label{SimplTargPost}
+p(z_t|x_t,z_{1:t-1},u_{1:t}) = p(z_t|x_t)
+\end{equation}
+
+This allows us to simplify \ref{TargetPosterior} as
+
+\begin{equation}\label{MoreSimplTargPost}
+\begin{aligned}
+p(x_t|z_{1:t},u_{1:t}) &= \eta p(z_t|x_t) p(x_t|z_{1:t-1}, u_{1:t})\\
+&= \eta p(z_t|x_t) \overline{bel}(x_t)
+\end{aligned}
+\end{equation}
+
+where
+
+\begin{equation}\label{belief}
+\overline{bel}(x_t) = p(x_t|z_{1:t-1}, u_{1:t})
+\end{equation}
+
+Using the theorem of total probability
+
+\begin{equation}
+p(x) = \int p(x|y) p(y) dy
+\end{equation}
+
+equation \ref{belief} can be written as 
+
+\begin{equation}
+\overline{bel}(x_t) = \int p(x_t|x_{t-1}, z_{1:t-1}, u_{1:t}) p(x_{t-1}|z_{1:t-1}, u_{1:t}) dx_{t-1}
+\end{equation}
+
+If we know the state $x_{t-1}$, past measurements and controls have no bearing on the state $x_t$. So
+
+\begin{equation}
+p(x_t|x_{t-1}, z_{1:t-1}, u_{1:t}) = p(x_t|x_{t-1}, u_t)
+\end{equation}
+
+We can see that command $u_t$ can be omitted from the set of conditioning variables in $p(x_{t-1}|z_{1:t-1}, u_{1:t})$. This gives us the recursive update equation \ref{belief} as
+
+\begin{equation}
+\overline{bel}(x_t) = \int p(x_t|x_{t-1}, u_t) p(x_{t-1}|z_{1:t-1}, u_{1:t-1}) dx_{t-1}
+\end{equation}
+
+This reduces to
+
+\begin{equation}
+\overline{bel}(x_t) = \int p(x_t|x_{t-1}, u_t) bel(x_{t-1}) dx_{t-1}
+\end{equation}
+
+\subsection{The Bayes Filter Algorithm}
+
+Based on the above mathematical derivation for a Bayes Filter, we can write down the Bayes Filter Algorithm as follows
+
+  \begin{minipage}{\linewidth}
+  \begin{algorithm}[H]
+    \caption{Bayes Filter Algorithm}\label{euclid}
+    \begin{algorithmic}[1]
+      \Procedure{BayesFilterAlgorithm}{$bel(x_{t-1},u_t, z_t)$}
+	\For{all $x_t$}
+		\State $\overline{bel}(x_t) = \int p(x_t|x_{t-1}, u_t) bel(x_{t-1}) dx_{t-1}$
+		\State $bel(x_t)= \eta p(z_t|x_t) \overline{bel}(x_t)$
+	\EndFor
+      \EndProcedure
+    \end{algorithmic}
+  \end{algorithm}
+  \end{minipage}\\\\
+
+The belief $bel(x_t)$ at time $t$ is computed from the belief $bel(x_{t-1})$ at time $t-1$. The input to the algorithm is the belief $bel$ at time $t-1$, along with the most recent control value $u_t$ and the most recent measurement $z_t$. Its output is the belief $bel(x_t)$ at time $t$.\\
+
+The Bayes Filter Algorithm consist of two essentials steps. In line 3, which is the prediction step, it calculates its belief over state $x_t$ based on the prior belief over state $x_{t-1}$ and the control $u_t$. The belief $\overline{bel}(x_t)$ that the robot assigns to state $x_t$ is obtained by the integral (or in other words the sum) of the product of two distributions: the prior assigned to $x_{t-1}$, and the probability that control $u_t$ induces a transition from $x_{t-1}$ to $x_t$.\\
+
+The second step of the Bayes Filter is called the measurement update. In line 4, the Bayes Filter algorithm multiplies the belief $\overline{bel}(x_t)$ by the probability that the measurement $z_t$ may have been observed. It does this for every hypothetical posterior state $x_t$.
+\subsection{The Kalman Filter}
+\subsection{The Extended Kalman Filter}
 The robot state transition function and landmark measurement probabilities are governed by nonlinear functions $g$ and $h$ respectively\cite{thrun}:
 \begin{equation}\label{transition}
 x_{t} = g(u_{t}, x_{t-1}) + \epsilon_{t}
@@ -405,9 +521,6 @@ z_{t} = h(x_{t}) + \delta_{t}
 
 Here $x_{t}$ is the robot location at time $t$, $u_{t}$ is the robot command that causes it to reach position $x_{t}$, $z_{t}$ is the landmark measurement at time $t$, $\epsilon_{t}$ is the robot motion uncertainty that depends of the mechanical properties of the robot and $\delta_{t}$ is the sensor measurement uncertainty. \\
 
-The Kalman Gain or the reduction in the robot position uncertainty is inversely proportional to the sensor uncertainty. The better the sensor, the higher will be the Kalman Gain and the less uncertainty there will be in the robot position\cite{stachniss}.
-
-\section{Problem description}
 \section{Approach/Methods}
 \section{Results}
 \section{Discussion}

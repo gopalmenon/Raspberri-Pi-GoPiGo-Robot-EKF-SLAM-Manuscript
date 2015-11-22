@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  21 NOV 2015 19:31
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  21 NOV 2015 23:13
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -474,25 +474,72 @@ Underfull \hbox (badness 10000) in paragraph at lines 586--587
 
  []
 
+<./figures/KalmanXform.pdf, id=41, 228.53229pt x 212.65428pt>
+File: ./figures/KalmanXform.pdf Graphic file (type pdf)
+
+<use ./figures/KalmanXform.pdf>
+Package pdftex.def Info: ./figures/KalmanXform.pdf used on input line 594.
+(pdftex.def)             Requested size: 252.94499pt x 235.37085pt.
+
+Overfull \hbox (0.94499pt too wide) in paragraph at lines 594--595
+ [][] 
+ []
+
 
 Underfull \hbox (badness 10000) in paragraph at lines 599--600
 
  []
 
 
-Underfull \hbox (badness 1406) in paragraph at lines 749--750
+Underfull \hbox (badness 10000) in paragraph at lines 609--610
+
+ []
+
+<./figures/EkfXform.pdf, id=42, 262.49138pt x 230.5993pt>
+File: ./figures/EkfXform.pdf Graphic file (type pdf)
+
+<use ./figures/EkfXform.pdf>
+Package pdftex.def Info: ./figures/EkfXform.pdf used on input line 613.
+(pdftex.def)             Requested size: 252.94499pt x 222.21729pt.
+
+Overfull \hbox (0.94499pt too wide) in paragraph at lines 613--614
+ [][] 
+ []
+
+[4 <./figures/KalmanXform.pdf> <./figures/EkfXform.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 626--627
+[]\OT1/ptm/b/n/10 pro-ce-dure \OT1/ptm/m/sc/10 Ex-tended Kalman Fil-ter
+ []
+
+
+Overfull \hbox (10.0pt too wide) in paragraph at lines 622--637
+[]$[]$ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 622--637
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 622--637
+
+ []
+
+
+Underfull \hbox (badness 1406) in paragraph at lines 787--788
 []\OT1/ptm/m/n/8 Thrun, Se-bas-tian, Wol-fram Bur-gard, and Di-eter Fox, \OT1/p
 tm/m/it/8 Prob-a-bilis-tic
  []
 
 
-Underfull \hbox (badness 3189) in paragraph at lines 752--753
+Underfull \hbox (badness 3189) in paragraph at lines 790--791
 []\OT1/ptm/m/n/8 Stachniss, Cyrill, \OT1/ptm/m/it/8 SLAM Course - WS13/14\OT1/p
 tm/m/n/8 , YouTube. YouTube,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 752--753
+Underfull \hbox (badness 10000) in paragraph at lines 790--791
 \OT1/ptm/m/n/8 n.d. Web. 18 Sept. 2015. $https : / / www . youtube . com / play
 list ? list =
  []
@@ -508,14 +555,14 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[4
+[5
 
 ] (./bare_conf.aux) ) 
 Here is how much of TeX's memory you used:
- 4181 strings out of 493117
- 64736 string characters out of 6135433
- 142870 words of memory out of 5000000
- 7590 multiletter control sequences out of 15000+600000
+ 4194 strings out of 493117
+ 65020 string characters out of 6135433
+ 142894 words of memory out of 5000000
+ 7601 multiletter control sequences out of 15000+600000
  38484 words of font info for 75 fonts, out of 8000000 for 9000
  1144 hyphenation exceptions out of 8191
  51i,10n,27p,1463b,334s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -523,21 +570,22 @@ Here is how much of TeX's memory you used:
 r.enc}</usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10
 .pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.
 pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pf
-b></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb>
-</usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></u
-sr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/
-local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/l
-ocal/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/loc
-al/texlive/2014/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/texl
-ive/2014/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/201
-4/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2014/texmf-di
-st/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/
-type1/urw/times/utmr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/
-times/utmri8a.pfb>
-Output written on bare_conf.pdf (4 pages, 260646 bytes).
+b></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb>
+</usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></
+usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr
+/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/lo
+cal/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/loc
+al/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local
+/texlive/2014/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/texliv
+e/2014/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/2014/
+texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2014/texmf-dist
+/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/ty
+pe1/urw/times/utmr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/ti
+mes/utmri8a.pfb>
+Output written on bare_conf.pdf (5 pages, 399966 bytes).
 PDF statistics:
- 85 PDF objects out of 1000 (max. 8388607)
- 62 compressed objects within 1 object stream
+ 129 PDF objects out of 1000 (max. 8388607)
+ 98 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 

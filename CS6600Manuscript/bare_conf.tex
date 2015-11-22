@@ -115,6 +115,7 @@
 \usepackage{url}
 \usepackage[fleqn]{amsmath}
 \usepackage{algorithm,algpseudocode}
+\usepackage{mathtools}
 
 
 % *** GRAPHICS RELATED PACKAGES ***
@@ -404,7 +405,7 @@ The robot will compute its expected position based on its position and the movem
 \section{Problem description}
 \subsection{The Bayes Filter}
 
-The Bayes Filter is an algorithm used for calculating beliefs{thrun}. In our case it is the belief of the robot position. This algorithm is used to compute the belief probability distribution $bel$ from measurement and control data. The measurement data is obtained from sensors and the control data is obtained from the robot command or telemetry. 
+The Bayes Filter is an algorithm used for calculating beliefs\cite{thrun}. In our case it is the belief of the robot position. This algorithm is used to compute the belief probability distribution $bel$ from measurement and control data. The measurement data is obtained from sensors and the control data is obtained from the robot command or telemetry. 
 
 Bayes Rule says that
 
@@ -490,9 +491,9 @@ This reduces to
 
 Based on the above mathematical derivation for a Bayes Filter, we can write down the Bayes Filter Algorithm as follows
 
-  \begin{minipage}{\linewidth}
+\begin{minipage}{\linewidth}
   \begin{algorithm}[H]
-    \caption{Bayes Filter Algorithm}\label{euclid}
+    \caption{Bayes Filter Algorithm}\label{AlgBayes}
     \begin{algorithmic}[1]
       \Procedure{BayesFilterAlgorithm}{$bel(x_{t-1},u_t, z_t)$}
 	\For{all $x_t$}
@@ -502,14 +503,90 @@ Based on the above mathematical derivation for a Bayes Filter, we can write down
       \EndProcedure
     \end{algorithmic}
   \end{algorithm}
-  \end{minipage}\\\\
+\end{minipage}\\\\
 
 The belief $bel(x_t)$ at time $t$ is computed from the belief $bel(x_{t-1})$ at time $t-1$. The input to the algorithm is the belief $bel$ at time $t-1$, along with the most recent control value $u_t$ and the most recent measurement $z_t$. Its output is the belief $bel(x_t)$ at time $t$.\\
 
 The Bayes Filter Algorithm consist of two essentials steps. In line 3, which is the prediction step, it calculates its belief over state $x_t$ based on the prior belief over state $x_{t-1}$ and the control $u_t$. The belief $\overline{bel}(x_t)$ that the robot assigns to state $x_t$ is obtained by the integral (or in other words the sum) of the product of two distributions: the prior assigned to $x_{t-1}$, and the probability that control $u_t$ induces a transition from $x_{t-1}$ to $x_t$.\\
 
 The second step of the Bayes Filter is called the measurement update. In line 4, the Bayes Filter algorithm multiplies the belief $\overline{bel}(x_t)$ by the probability that the measurement $z_t$ may have been observed. It does this for every hypothetical posterior state $x_t$.
+
 \subsection{The Kalman Filter}
+
+The Kalman Filter is a technique for implementing a Bayes Filter\cite{thrun}. This is used for filtering and prediction in linear Gaussian systems.\\
+
+A probability distribution of a one-dimensional normal distribution with mean $\mu$ and variance $\sigma ^2$ is given by the following Gaussian function
+ 
+ \begin{equation}\label{1dNormal}
+p(x) = (2 \pi \sigma ^ 2) ^ {-\frac{1}{2}} \exp\left\{ - \frac{1}{2} \frac{(x - \mu)^2}{\sigma ^ 2} \right\}
+\end{equation}
+
+The Normal distribution \ref{1dNormal} is for a scalar $x$. In the case of a robot, the robot location on a flat surface is given by $\begin{bmatrix} x &   y & \theta \end{bmatrix}^{T}$ where $x$ is the x coordinate, $y$ is the y coordinate and $\theta$ is the robot orientation. This vector is called the robot pose. A Normal distribution over such a vector is called \textit{multivariate}. These distributions have the following form
+
+ \begin{equation}\label{MvNormal}
+p(x) = \det(2 \pi \Sigma) ^ {-\frac{1}{2}} \exp\left\{ - \frac{1}{2} (x - \mu)^T \Sigma ^ {-1} (x - \mu) \right\}
+\end{equation}
+
+where $\mu$ is the mean vector that has the same dimensionality as the state $x$. $\Sigma$ is the covariance matrix and its dimension is the dimensionality of the state $x$ squared. Equation \ref{MvNormal} is a generalization of equation \ref{1dNormal}. Both definitions are equivalent if $x$ is a scalar and value and $\Sigma = \sigma ^ 2$.
+
+For a Kalman filter, in posteriors are Gaussian if the following three properties hold\\
+
+\begin{enumerate}
+\item The state transition probability $p(x_t|x_{t-1}, u_t)$ must be a linear function of its arguments with added Gaussian noise. This is expressed by the following equation
+
+ \begin{equation}\label{Kalman1}
+x_t = A_tx_{t-1} + B_tu_t + \varepsilon_t
+\end{equation}
+
+where $A_t$ and $B_t$ are matrices. $A_t$ has the dimension equal to the square of the state vector, $B_t$ has the dimension of $n \times m$, where $n$ is the dimension of the state vector and $m$ is the dimension of the control variable $u_t$. The random variable $\varepsilon_t$ models the uncertainty introduced by the state transition and depends on the robot mechanics. Its mean is zero and covariance will be denoted by $R_t$. The state transition probability distribution can be obtained by plugging in \ref{Kalman1} into \ref{MvNormal}. The mean of the posterior state is given by $A_tx_{t-1} + B_tu_t$ and the covariance by $R_t$.\\
+
+\item The measurement probability $p(z_t|x_t)$ must also be linear in its arguments with added Gaussian noise
+
+ \begin{equation}\label{Kalman2}
+z_t = C_tx_{t} + \delta_t
+\end{equation}
+
+Here $C_t$ is a matrix of size $k \times n$, where $k$ is the dimension of the measurement vector $z_t$. The vector $\delta_t$ describes the measurement noise. The distribution of $\delta_t$ is a multivariate Gaussian with zero mean and covariance $Q_t$.\\
+
+\item Finally the initial belief $bel(x_0)$ must be normally distributed. We can denote the mean of this belief by mean $\mu_0$ and covariance $\Sigma_0$.
+\end{enumerate}
+
+The Kalman filter algorithm is given below
+
+\begin{minipage}{\linewidth}
+  \begin{algorithm}[H]
+    \caption{Kalman Filter Algorithm}\label{AlgKalman}
+    \begin{algorithmic}[1]
+      \Procedure{Kalman Filter Algorithm} {$\mu_{t-1},\Sigma_{t-1}, u_t,z_t$}
+	\State $\overline \mu_t = A_t \mu_{t-1} + B_t u_t$
+	\State $\overline \Sigma_t= A_t \Sigma_{t-1} A_t^T + R_t$  
+	\State $K_t = \overline \Sigma_t C_t^T{(C_t \overline \Sigma_t C_t^T + Q_t)}^{-1}$
+	\State $\mu_t = \overline \mu_t + K_t(z_t - C_t \overline \mu_t)$
+	\State $\Sigma_t = (I - K_t C_t) \overline \Sigma_t$
+	\State return $\mu_t, \Sigma_t$
+      \EndProcedure
+    \end{algorithmic}
+  \end{algorithm}
+\end{minipage}\\\\
+
+The algorithm represents the belief $bel(x_t)$ at time $t$ by the mean $\mu_t$ and covariance $\Sigma_t$. The input is the belief at time $t-1$, the control $u_t$ and measurement $z_t$. The output is the belief at time $t$.\\
+
+In lines 2 and 3, the predicted belief $\overline \mu$ and $\overline \Sigma$ is calculated representing the belief $\overline{bel}(x_t)$ one time step later, but before incorporating the measurement $z_t$. This belief is obtained by incorporating the control $u_t$. The mean is updated using the deterministic state transition function \ref{Kalman1} with the mean $\mu_{t-1}$ substituted for the state $x_{t-1}$. The update of the covariance considers the fact that states depend on the previous state through the linear matrix $A_t$. The variable $K_t$ computed in line 4 is called \textit{Kalman gain}. This is the reduction is uncertainty that is obtained by combining the prediction and correction steps. The belief $\overline{bel}(x_t)$ is transformed into the desired belief ${bel}(x_t)$ in lines 5 and 6 by incorporating the measurement $z_t$. Line 5 manipulates the mean by adjusting it in proportion to the Kalman gain $K_t$ and the deviation of the actual measurement $z_t$ and the measurement predicted as per the measurement probability \ref{Kalman2}. Finally a new covariance of the posterior belief is calculated in line 6, adjusting for the information gain resulting from the measurement.\\
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=3.5in]{./figures/KalmanIllustration.pdf}
+
+\caption{Illustration of Kalman filters: (a) initial belief, (b) a measurement (in bold) with the associated uncertainty, (c) belief after integrating the measurement into the belief using the Kalman filter algorithm, (d) belief after motion to the right (which introduces uncertainty), (e) a new measurement with associated uncertainty, and (f) the resulting belief.}
+\label{KalmanIllustration}
+\end{figure}
+
+Figure \ref{KalmanIllustration} illustrates the Kalman filter for a simplistic one-dimensional localization scenario. Suppose the robot moves in the horizontal axis in each diagram in figure \ref{KalmanIllustration} with the prior over the robot localization given by the normal distribution shown in figure \ref{KalmanIllustration}a. The robot queries its sensors on its location and these return a measurement that is centered at the peak of the bold Gaussian distribution in figure \ref{KalmanIllustration}b. The peak corresponds to the value returned by the sensors and the its width or variance corresponds to the uncertainty in measurement. Combining the prior with the measurement in lines 4 through 6 of the Kalman filter algorithm, yields the bold Gaussian in figure \ref{KalmanIllustration}c. The belief's mean lies between the two original means, and its uncertainty width is smaller than both contributing Gaussians. The is the result of the information gain from using the Kalman filter.\\
+
+Now lets assume that the robot moves towards the right. Its uncertainty grows due to the fact that the state transition is stochastic. Lines 2 and 3 of the Kalman filter algorithm provide us with the Gaussian shown in bold in figure \ref{KalmanIllustration}d. This Gaussian is shifted by the amount the robot moved and is also wider because of the uncertainty introduced by the movement. The robot does a second sensor measurement shown by the bold Gaussian in figure \ref{KalmanIllustration}e, which leads to the posterior shown in bold in figure \ref{KalmanIllustration}f.\\
+
+As this example illustrates, the Kalman filter alternates a measurement update step, in which sensor data is integrated into the present belief, with a prediction step, which modifies the belief. The prediction step increases and the update step decreases the uncertainty in the robot's belief.
+
 \subsection{The Extended Kalman Filter}
 The robot state transition function and landmark measurement probabilities are governed by nonlinear functions $g$ and $h$ respectively\cite{thrun}:
 \begin{equation}\label{transition}

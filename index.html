@@ -93,6 +93,37 @@ Shown above is an example of the use of a Kalman filter to reduce uncertainty. A
   The above figure illustrates the Kalman filter for a simplistic one-dimensional localization scenario. Suppose the robot moves in the horizontal axis in each diagram with the prior over the robot localization given by the normal distribution shown in 1a. The robot queries its sensors on its location and these return a measurement that is centered at the peak of the bold Gaussian distribution in 1b. The peak corresponds to the value returned by the sensors and the its width or variance corresponds to the uncertainty in measurement. Combining the prior with the measurement yields the bold Gaussian in 1c. The belief’s mean lies between the two original means, and its uncertainty width is smaller than both contributing Gaussians. The is the result of the information gain from using the Kalman filter. Now lets assume that the robot moves towards the right. Its uncertainty grows due to the fact that the state transition is stochastic. This results in the the Gaussian shown in bold in 1d. This Gaussian is shifted by the amount the robot moved and is also wider because of the uncertainty introduced by the movement. The robot does a second sensor measurement shown in 1e, which results in the posterior shown in 1f.
 </p>  
 
+<table style="border-collapse: collapse;">
+  <caption align="bottom">
+    Linear transformation of a Gaussian random variable. The lower right plot shows the density of the original random variable, X. This random variable is passed through the function displayed in the upper right graph (the transformation of the mean is indicated by the dotted line). The density of the resulting random variable Y is plotted in the upper left graphs.
+  </caption>
+  <tr>
+    <td>
+      <img src="images/LinearXform.pdf" alt="Linear transform" style="width:400px;height:500px;"/>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Shown above in the bottom-right part is a prior Gaussian probability distribution for a robot location and the posterior distribution on the upper-left part after it is acted on by a linear transformation. The posterior distribution is also Gaussian. In such cases a Kalman filter can be used for reducing uncertainty.
+</p>
+
+
+<table style="border-collapse: collapse;">
+  <caption align="bottom">
+    Illustration of linearization applied by the EKF. Instead of passing the Gaussian through the nonlinear function g, it is passed through a linear approximation of g. The linear function is tangent to g at the mean of the original Gaussian. The resulting Gaussian is shown as the dashed line in the upper left graph.
+  </caption>
+  <tr>
+    <td>
+      <img src="images/NonLinearXform.pdf" alt="Non-Linear filter transform" style="width:400px;height:500px;"/>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Shown above in the bottom-right part is a prior Gaussian probability distribution for a robot location and the shaded posterior distribution on the upper-left part after it is acted on by a non-linear transformation. The posterior distribution is not Gaussian. In such cases a Kalman filter cannot be used for reducing uncertainty. An extended Kalman filter can be employed by making use of a tangent to the non-linear function. The resulting Gaussian distribution is shown by the dotted line.
+</p>
+
 <h3>
 <a id="why" class="anchor" href="#why" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why</h3>
 

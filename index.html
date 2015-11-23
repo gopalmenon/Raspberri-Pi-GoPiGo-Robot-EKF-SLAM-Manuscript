@@ -78,7 +78,21 @@
 
 Shown above is an example of the use of a Kalman filter to reduce uncertainty. A cannonball is tracked using a range-finder which returns the location with some added noise. A Kalman filter can be used to combime the expected cannonball trajectory with its location returned by a range finder to produce an good estimate of its location.
 
+<table style="border-collapse: collapse;">
+  <caption align="bottom">
+    Illustration of Kalman filters: (a) initial belief, (b) a measurement (in bold) with the associated uncertainty, (c) belief after integrating the measurement into the belief using the Kalman filter algorithm, (d) belief after motion to the right (which introduces uncertainty), (e) a new measurement with associated uncertainty, and (f) the resulting belief.
+  </caption>
+  <tr>
+    <td>
+      <img src="images/LocationProb.pdf" alt="Kalman filter used for reducing uncertainty"/>
+    </td>
+  </tr>
+</table>
 <h3>
+  
+<p>
+  The above figuren illustrates the Kalman filter for a simplistic one-dimensional localization scenario. Suppose the robot moves in the horizontal axis in each diagram with the prior over the robot localization given by the normal distribution shown in 1a. The robot queries its sensors on its location and these return a measurement that is centered at the peak of the bold Gaussian distribution in 1b. The peak corresponds to the value returned by the sensors and the its width or variance corresponds to the uncertainty in measurement. Combining the prior with the measurement yields the bold Gaussian in 1c. The belief’s mean lies between the two original means, and its uncertainty width is smaller than both contributing Gaussians. The is the result of the information gain from using the Kalman filter. Now lets assume that the robot moves towards the right. Its uncertainty grows due to the fact that the state transition is stochastic. This results in the the Gaussian shown in bold in 1d. This Gaussian is shifted by the amount the robot moved and is also wider because of the uncertainty introduced by the movement. The robot does a second sensor measurement shown in 1e, which results in the posterior shown in 1f.
+</p>  
 <a id="why" class="anchor" href="#why" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why</h3>
 
 <p>Robot motion is stochastic and not deterministic. A robot does not faithfully execute movement commands due to inaccuracies in its motion mechanism, approximations made in modeling its environment and incomplete modeling of the physics of its operating environment. Due to these reasons, the robot may not end up exactly at the location where it should have been if the movement command had been faithfully executed. The robot position may be thought of as a two dimensional probability distribution. This probability distribution will have a mean that will be equal to the expected robot location based on the movement command. The covariance will be the measure of how faithfully it executes commands. Due to this uncertainty in movement, with each motion command, the location uncertainty increases and after a while the robot gets lost. In some applications, robots need to be able to go into an unknown environment and explore it. This is a difficult problem due to the issue described above. If a map of the environment is available, the robot can use sensors to find its location in the environment. Conversely, if the robot knows where it is, it can generate an environment map. This is a sort of chicken and end problem. Simultaneous Localization and Mapping (SLAM) solves this problem. </p>

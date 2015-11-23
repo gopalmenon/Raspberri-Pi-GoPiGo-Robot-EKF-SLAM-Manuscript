@@ -125,7 +125,7 @@ Shown above is an example of the use of a Kalman filter to reduce uncertainty. A
 </p>
 
 <h3>
-<a id="How" class="anchor" href="#why" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why</h3>
+<a id="How" class="anchor" href="#How" aria-hidden="true"><span class="octicon octicon-link"></span></a>How</h3>
 
 <table style="border-collapse: collapse;">
   <caption align="bottom">
@@ -133,12 +133,26 @@ Shown above is an example of the use of a Kalman filter to reduce uncertainty. A
   </caption>
   <tr>
     <td>
-      <img src="images/GraphicalSlam.pdf" alt="A graphical model of the SLAM algorithm" style="width:600px;height:600px;"/>
+      <img src="images/GraphicalSlam.pdf" alt="A graphical model of the SLAM algorithm"/>
     </td>
   </tr>
 </table>
 <p>
    A graphical model of the SLAM algorithm is shown above. The robot pose (X coordinate, Y coordinate and robor orientation) is depicted by the circles containing the x with subscript. The circles with u and a subscript stand for the motion command at the location. The cicle with m stands for a landmark and the circles with z and subscript stand for sensor measurements of the landmarks taken at the robot pose that it is attached to.
+</p>
+
+<table style="border-collapse: collapse;">
+  <caption align="bottom">
+    The essential SLAM problem. A simultaneous estimate of both robot and landmark locations is required. The true locations are never known or measured directly. Observations are made between true robot and landmark locations.
+  </caption>
+  <tr>
+    <td>
+      <img src="images/EssentialSlam.pdf" alt="Essential SLAM problem"/>
+    </td>
+  </tr>
+</table>
+<p>
+  The figure above shows a robot moving through an environment, taking measurements of landmarks. As the robot does this, the estimates of the landmarks are all correlated with each other because of the common error in estimate robot location. 
 </p>
       </section>
     </div>

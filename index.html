@@ -55,6 +55,9 @@
   </tr>
 </table>
 
+<p>
+  In the above diagram, before the robot starts moving, it knows exactly where it is. So it's location belief is a single point. After each movement, its location uncertainty increases. This is shown by the location probability distribution that changes from a point to a larger area with each step. In the final position of the robot, the uncertainty is the largest as it accumulates the added uncertainty with each step.
+</p>
 <p>In some applications, robots need to be able to go into an unknown environment and explore it. This is a difficult problem due to the issue described above. If a map of the environment is available, the robot can use sensors to find its location in the environment. Conversely, if the robot knows where it is, it can generate an environment map. This is a sort of chicken and end problem. Simultaneous Localization and Mapping (SLAM) solves this problem. An Extended Kalman Filter (EKF) can be used to reduce robot location uncertainty. This document describes the implementation of EKF SLAM using a robot. The EKF SLAM implementation enables the robot to keep track of its location within an environment and also create a map of the environment as it is moving.</p>
 
 <h3>

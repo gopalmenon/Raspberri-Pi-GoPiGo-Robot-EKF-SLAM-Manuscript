@@ -58,12 +58,25 @@
 <p>
   In the above diagram, before the robot starts moving, it knows exactly where it is. So it's location belief is a single point. After each movement, its location uncertainty increases. This is shown by the location probability distribution that changes from a point to a larger area with each step. In the final position of the robot, the uncertainty is the largest as it accumulates the added uncertainty with each step.
 </p>
-<p>In some applications, robots need to be able to go into an unknown environment and explore it. This is a difficult problem due to the issue described above. If a map of the environment is available, the robot can use sensors to find its location in the environment. Conversely, if the robot knows where it is, it can generate an environment map. This is a sort of chicken and end problem. Simultaneous Localization and Mapping (SLAM) solves this problem. An Extended Kalman Filter (EKF) can be used to reduce robot location uncertainty. This document describes the implementation of EKF SLAM using a robot. The EKF SLAM implementation enables the robot to keep track of its location within an environment and also create a map of the environment as it is moving.</p>
+<p>In some applications, robots need to be able to go into an unknown environment and explore it. This is a difficult problem due to the issue described above. If a map of the environment is available, the robot can use sensors to find its location in the environment. Conversely, if the robot knows where it is, it can generate an environment map. This is a sort of chicken and end problem. Simultaneous Localization and Mapping (SLAM) solves this problem. An Extended Kalman Filter (EKF) can be used to reduce robot location uncertainty. This page describes the implementation of EKF SLAM using a robot. The EKF SLAM implementation enables the robot to keep track of its location within an environment and also create a map of the environment as it is moving.</p>
 
 <h3>
 <a id="what" class="anchor" href="#what" aria-hidden="true"><span class="octicon octicon-link"></span></a>What</h3>
 
 <p>As it moves through an environment, the robot uses the knowledge of its own movement and sensing uncertainties in conjunction with an EKF to reduce its location uncertainty.</p>
+
+<table style="border-collapse: collapse;">
+  <caption align="bottom">
+    Cannonball flight smoothed out by a Kalman filter.
+  </caption>
+  <tr>
+    <td>
+      <img src="images/kalman2.png" alt="Kalman filter visualization"/>
+    </td>
+  </tr>
+</table>
+
+Shown above is an example of the use of a Kalman filter to reduce uncertainty. A cannonball is tracked using a range-finder which returns the location with some added noise. A Kalman filter can be used to combime the expected cannonball trajectory with its location returned by a range finder to produce an good estimate of its location.
 
 <h3>
 <a id="why" class="anchor" href="#why" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why</h3>

@@ -178,8 +178,13 @@ Shown above is an example of the use of a Kalman filter to reduce uncertainty. A
 </p>
 
 <p>
-  
+  The robot has been programmed to navigate through obstacles using the rangefinder and movement commands. It first goes to the nearest obstacle and stops when it gets to within two lengths of it. Then it randomly turns 45 degrees left or right and repeats the process. Due to limitations in the ultrasonic sensor, an obstacle that is 7 cm wide is seen to be 33 cm wide. When the location and sensing uncertainty is taken into account, this will result in an obstacle with a width that will be larger than 33 cm. Due to this limitation, the distance between obstacles needed to be several times this width. This made the testing imparactical due to physical space limitations. In addition to this, the process of associating new observations to previously seen landmarks became impossible with the nearest neighbor method. The reason is that the nearest neighbor association method relies on closeness of the previously observed landmarks to their new expected location based on the robot movement. Since the sensing uncertainty is so large, it made the association with known landmarks impossible.  
 </p>
+
+<p>
+  The final implementation of the project consists of a robot that can navigate through obstacles and can predict is current location based on its previous location plus the expected movement based on the movement command. The correction step that reduces the robot location uncertainty has not been implemented. 
+</p>
+
 <h3>
 <a id="ProjectDemo" class="anchor" href="#ProjectDemo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Project Demo</h3>
 

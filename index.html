@@ -40,9 +40,9 @@
 
 <h3>
 
-<a id="teaser" class="anchor" href="#teaser" aria-hidden="true"><span class="octicon octicon-link"></span></a>Teaser</h3>
+<a id="Abstract" class="anchor" href="#Abstract" aria-hidden="true"><span class="octicon octicon-link"></span></a>Abstract</h3>
 
-<p>Robot motion is stochastic and not deterministic. A robot does not faithfully execute movement commands due to inaccuracies in its motion mechanism, approximations made in modeling its environment and incomplete modeling of the physics of its operating environment. Due to these reasons, the robot may not end up exactly at the location where it should have been if the movement command had been faithfully executed. The robot position may be thought of as a two dimensional probability distribution. This probability distribution will have a mean that will be equal to the expected robot location based on the movement command. The covariance will be the measure of how faithfully it executes commands. Due to this uncertainty in movement, with each motion command, the location uncertainty increases and after a while the robot gets lost. </p>
+<p>Robot motion is stochastic and not deterministic. A robot does not faithfully execute movement commands due to inaccuracies in its motion mechanism, approximations made in modeling its environment and incomplete modeling of the physics of its operating environment. Due to these reasons, the robot may not end up exactly at the location where it should have been if the movement command had been faithfully executed. The robot position may be thought of as a two dimensional probability distribution. This probability distribution will have a mean that will be equal to the expected robot location based on the movement command. The covariance will be the measure of how faithfully it executes commands. Due to this uncertainty in movement, with each motion command, the location uncertainty increases and after a while the robot gets lost. The EKF SLAM implementation consists of two steps - prediction and updation. The prediction step has been implemented successfully. However, the updation step has not been fully implemented due to problems with the ultrasonic sensor as described below.</p>
 
 <table style="border-collapse: collapse;">
   <caption align="bottom">

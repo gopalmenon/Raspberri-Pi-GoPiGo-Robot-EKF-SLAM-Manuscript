@@ -46,7 +46,7 @@
 
 <table style="border-collapse: collapse;">
   <caption align="bottom">
-    Sampling approximation of the position belief for a non-sensing robot. The solid line displays the actions, and the samples represent the robot’s belief at different points in time.
+    Sampling approximation of the position belief for a non-sensing robot[4]. The solid line displays the actions, and the samples represent the robot’s belief at different points in time.
   </caption>
   <tr>
     <td>
@@ -80,7 +80,7 @@ Shown above is an example of the use of a Kalman filter to reduce uncertainty. A
 
 <table style="border-collapse: collapse;">
   <caption align="bottom">
-    Illustration of Kalman filters: (a) initial belief, (b) a measurement (in bold) with the associated uncertainty, (c) belief after integrating the measurement into the belief using the Kalman filter algorithm, (d) belief after motion to the right (which introduces uncertainty), (e) a new measurement with associated uncertainty, and (f) the resulting belief.
+    Illustration of Kalman filters (x-axis = distance moved, y-axis = probability of being at the location)[4]: (a) initial belief, (b) a measurement (in bold) with the associated uncertainty, (c) belief after integrating the measurement into the belief using the Kalman filter algorithm, (d) belief after motion to the right (which introduces uncertainty), (e) a new measurement with associated uncertainty, and (f) the resulting belief.
   </caption>
   <tr>
     <td>
@@ -95,7 +95,7 @@ Shown above is an example of the use of a Kalman filter to reduce uncertainty. A
 
 <table style="border-collapse: collapse;">
   <caption align="bottom">
-    Linear transformation of a Gaussian random variable. The lower right plot shows the density of the original random variable, X. This random variable is passed through the function displayed in the upper right graph (the transformation of the mean is indicated by the dotted line). The density of the resulting random variable Y is plotted in the upper left graphs.
+    Linear transformation of a Gaussian random variable[4]. The lower right plot shows the density of the original random variable, X. This random variable is passed through the function displayed in the upper right graph (the transformation of the mean is indicated by the dotted line). The density of the resulting random variable Y is plotted in the upper left graphs.
   </caption>
   <tr>
     <td>
@@ -111,7 +111,7 @@ Shown above is an example of the use of a Kalman filter to reduce uncertainty. A
 
 <table style="border-collapse: collapse;">
   <caption align="bottom">
-    Illustration of linearization applied by the EKF. Instead of passing the Gaussian through the nonlinear function g, it is passed through a linear approximation of g. The linear function is tangent to g at the mean of the original Gaussian. The resulting Gaussian is shown as the dashed line in the upper left graph.
+    Illustration of linearization applied by the EKF[4]. Instead of passing the Gaussian through the nonlinear function g, it is passed through a linear approximation of g. The linear function is tangent to g at the mean of the original Gaussian. The resulting Gaussian is shown as the dashed line in the upper left graph.
   </caption>
   <tr>
     <td>
@@ -129,7 +129,7 @@ Shown above is an example of the use of a Kalman filter to reduce uncertainty. A
 
 <table style="border-collapse: collapse;">
   <caption align="bottom">
-    A graphical model of the SLAM algorithm.
+    A graphical model of the SLAM algorithm[4].
   </caption>
   <tr>
     <td>
@@ -143,7 +143,7 @@ Shown above is an example of the use of a Kalman filter to reduce uncertainty. A
 
 <table style="border-collapse: collapse;">
   <caption align="bottom">
-    The essential SLAM problem. A simultaneous estimate of both robot and landmark locations is required. The true locations are never known or measured directly. Observations are made between true robot and landmark locations.
+    The essential SLAM problem[2]. A simultaneous estimate of both robot and landmark locations is required. The true locations are never known or measured directly. Observations are made between true robot and landmark locations.
   </caption>
   <tr>
     <td>
@@ -158,7 +158,7 @@ Shown above is an example of the use of a Kalman filter to reduce uncertainty. A
 
 <table style="border-collapse: collapse;">
   <caption align="bottom">
-    Spring network analogy. The landmarks are connected by springs describing correlations between landmarks. As the vehicle moves back and forth through the environment, spring stiffness or correlations increase (red links become thicker). As landmarks are observed and estimated locations are corrected, these changes are propagated through the spring network. Note, the robot itself is correlated to the map.
+    Spring network analogy[2]. The landmarks are connected by springs describing correlations between landmarks. As the vehicle moves back and forth through the environment, spring stiffness or correlations increase (red links become thicker). As landmarks are observed and estimated locations are corrected, these changes are propagated through the spring network. Note, the robot itself is correlated to the map.
   </caption>
   <tr>
     <td>

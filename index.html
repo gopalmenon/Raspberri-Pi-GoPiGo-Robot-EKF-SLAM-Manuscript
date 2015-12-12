@@ -34,13 +34,13 @@
         <h3>
 <a id="Abstract" class="anchor" href="#Abstract" aria-hidden="true"><span class="octicon octicon-link"></span></a>Abstract</h3>
 
-<p>This is an implementation of Extended Kalman Filter (EKF) Simultaneous Localization and Mapping (SLAM ) using a Raspberry Pi based GoPiGo robot that is sold by <a href="http://www.dexterindustries.com">Dexter Industries</a> in kit form. The robot has two powered wheels and a third castor wheel. It is equipped with an ultrasonic range finder that is mounted on a servo mechanism that allows for the range finder to be pointed in any direction in front of the robot.  The EKF SLAM implementation consists of two steps - prediction and updation. The prediction step has been implemented successfully. However, the updation step has not been fully implemented due to problems with the ultrasonic sensor as described below.</p>
+<p>This is an implementation of Extended Kalman Filter (EKF) Simultaneous Localization and Mapping (SLAM ) using a Raspberry Pi based GoPiGo robot that is sold by <a href="http://www.dexterindustries.com">Dexter Industries</a> in kit form. The robot has two powered wheels and a third castor wheel. It is equipped with an ultrasonic range finder that is mounted on a servo mechanism that allows for the range finder to be pointed in any direction in front of the robot.  An EKF SLAM implementation consists of two steps - prediction and updation. The prediction step has been implemented successfully. However, the updation step has not been fully implemented due to problems with the ultrasonic sensor as described below.</p>
 
 <img src="images/gopigo_kit_web.jpg" alt="GoPiGo Robot"/>
 
 <h3>
 
-<a id="Teaser" class="anchor" href="#Teaser" aria-hidden="true"><span class="octicon octicon-link"></span></a>Teaser</h3>
+<a id="ProblemDescription" class="anchor" href="#ProblemDescription" aria-hidden="true"><span class="octicon octicon-link"></span></a>Problem Description</h3>
 
 <p>Robot motion is stochastic and not deterministic. A robot does not faithfully execute movement commands due to inaccuracies in its motion mechanism, approximations made in modeling its environment and incomplete modeling of the physics of its operating environment. Due to these reasons, the robot may not end up exactly at the location where it should have been if the movement command had been faithfully executed. The robot position may be thought of as a two dimensional probability distribution. This probability distribution will have a mean that will be equal to the expected robot location based on the movement command. The covariance will be the measure of how faithfully it executes commands. Due to this uncertainty in movement, with each motion command, the location uncertainty increases and after a while the robot gets lost.</p>
 
@@ -61,7 +61,7 @@
 <p>In some applications, robots need to be able to go into an unknown environment and explore it. This is a difficult problem due to the issue described above. If a map of the environment is available, the robot can use sensors to find its location in the environment. Conversely, if the robot knows where it is, it can generate an environment map. This is a sort of chicken and end problem. Simultaneous Localization and Mapping (SLAM) solves this problem. An Extended Kalman Filter (EKF) can be used to reduce robot location uncertainty. This page describes the implementation of EKF SLAM using a robot. The EKF SLAM implementation enables the robot to keep track of its location within an environment and also create a map of the environment as it is moving.</p>
 
 <h3>
-<a id="what" class="anchor" href="#what" aria-hidden="true"><span class="octicon octicon-link"></span></a>What</h3>
+<a id="WhatIsAKalmanFilter" class="anchor" href="#WhatIsAKalmanFilter" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is a Kalman Filter</h3>
 
 <p>As it moves through an environment, the robot uses the knowledge of its own movement and sensing uncertainties in conjunction with an EKF to reduce its location uncertainty.</p>
 
@@ -125,7 +125,7 @@ Shown above is an example of the use of a Kalman filter to reduce uncertainty. A
 </p>
 
 <h3>
-<a id="How" class="anchor" href="#How" aria-hidden="true"><span class="octicon octicon-link"></span></a>How</h3>
+<a id="EKFSLAMAlgorithmDetails" class="anchor" href="#EKFSLAMAlgorithmDetails" aria-hidden="true"><span class="octicon octicon-link"></span></a>EKF SLAM Algorithm Details</h3>
 
 <table style="border-collapse: collapse;">
   <caption align="bottom">
@@ -170,9 +170,15 @@ Shown above is an example of the use of a Kalman filter to reduce uncertainty. A
   The uncertainty reduction process can be visualized as shown above as a network of springs connecting all landmarks together or as a rubber sheet in which all landmarks are embedded. An observation in a neighborhood acts like a displacement to a spring system or rubber sheet such that its effect is great in the neighborhood and, dependent on local stiffness (correlation) properties, diminishes with distance to other landmarks. As the robot moves through this environment and takes observations of the landmarks, the springs become increasingly (and monotonically) stiffer. In the limit, a rigid map of landmarks or an accurate relative map of the environment is obtained. As the map is built, the location accuracy of the robot measured relative to the map is bounded only by the quality of the map and relative measurement sensor. In the theoretical limit, robot relative location accuracy becomes equal to the localization accuracy achievable with a given map.
 </p>
 
+<h3>
+<a id="ImplementationDetails" class="anchor" href="#ImplementationDetails" aria-hidden="true"><span class="octicon octicon-link"></span></a>Implementation Details</h3>
+
 <p>
-  Shown below is a project demo.
+  Here are the implementation details.
 </p>
+
+<h3>
+<a id="ProjectDemo" class="anchor" href="#ProjectDemo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Project Demo</h3>
 
 <iframe src="https://player.vimeo.com/video/144304966" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <p><a href="https://vimeo.com/144304966">GoPiGi Obstacles Navigation</a> from <a href="https://vimeo.com/user45414333">Gopal Menon</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
 

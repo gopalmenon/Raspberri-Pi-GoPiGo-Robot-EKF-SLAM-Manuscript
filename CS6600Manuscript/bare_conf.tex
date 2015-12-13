@@ -375,7 +375,7 @@ Email: gopal.menon@aggiemail.usu.edu}
 % As a general rule, do not put math, special symbols or citations
 % in the abstract
 \begin{abstract}
-Robot motion is stochastic and not deterministic. A robot does not faithfully execute movement commands due to inaccuracies in its motion mechanism, approximations made in modeling its environment and incomplete modeling of the physics of its operating environment. Due to these reasons, the robot may not end up exactly at the location where it should have been if the movement command had been faithfully executed. The robot position may be thought of as a two dimensional probability distribution. This probability distribution will have a mean that will be equal to the expected robot location based on the movement command. The covariance will be the measure of how faithfully it executes commands. Due to this uncertainty in movement, with each motion command, the location uncertainty increases and after a while the robot gets lost. In some applications, robots need to be able to go into an unknown environment and explore it. This is a difficult problem due to the issue described above. If a map of the environment is available, the robot can use sensors to find its location in the environment. Conversely, if the robot knows where it is, it can generate an environment map. This is a sort of chicken and end problem. Simultaneous Localization and Mapping (SLAM) solves this problem. An Extended Kalman Filter (EKF) can be used to reduce robot location uncertainty. This document describes the implementation of EKF SLAM using a robot.
+Robot motion is stochastic and not deterministic. A robot does not faithfully execute movement commands due to inaccuracies in its motion mechanism, approximations made in modelling its environment and incomplete modelling of the physics of its operating environment. Due to these reasons, the robot may not end up exactly at the location where it should have been if the movement command had been faithfully executed. The robot position may be thought of as a two dimensional probability distribution. This probability distribution will have a mean that will be equal to the expected robot location based on the movement command. The covariance will be the measure of how faithfully it executes commands. Due to this uncertainty in movement, with each motion command, the location uncertainty increases and after a while the robot gets lost. In some applications, robots need to be able to go into an unknown environment and explore it. This is a difficult problem due to the issue described above. If a map of the environment is available, the robot can use sensors to find its location in the environment. Conversely, if the robot knows where it is, it can generate an environment map. This is a sort of chicken and end problem. Simultaneous Localization and Mapping (SLAM) solves this problem. An Extended Kalman Filter (EKF) can be used to reduce robot location uncertainty. This is done by combining the predicted robot location based on the equation of robot motion with the measured location based on sensor readings. The two robot location estimates are Gaussian distributions. These two distributions are combined and the resulting distribution will have a mean that is closer to the location estimate with the lower uncertainty and the uncertainty of resulting location will be lower than either of the two distributions (see \ref{sssec:num1}). This document describes the implementation of EKF SLAM using a robot.
 \end{abstract}
 
 % no keywords
@@ -398,11 +398,10 @@ Robot motion is stochastic and not deterministic. A robot does not faithfully ex
 \subsection{The robot platform}
 The robot used for this implementation is based on a Raspberry Pi and is manufactured and sold by Dexter Industries \cite{dexter}. The robot is equipped with an ultrasonic sensor that is capable of measuring distances accurately to 250 cm. The sensor is mounted on a servo mechanism that can point the sensor in any direction ahead of the robot. The robot moves through use of two wheels that can be independently controlled by motors. Each wheel has an encoder using which the robot can issue commands for a wheel to move a fixed number of steps. The robot also has a third castor wheel that can move in any direction, but is not powered. The robot will be given commands to make it move and it can sense its surroundings using the ultrasonic sensor.
 \subsection{EKF SLAM}
-A Kalman filter is a gaussian filter algorithm that can use two gaussian distributions for a computed value and merge them together to form a distribution that has lesser variance than either of the two distributions. A Kalman filter however only works in the case of systems where the mechanics are linear. This is where the Extended Kalman Filter (EKF) comes in. An EKF uses an approximation to find the resultant distribution after a prior dostribution is transformed by a non-linear function.\\
-
+A Kalman filter is a Gaussian filter algorithm that can use two Gaussian distributions for a computed value and merge them together to form a distribution that has lesser variance than either of the two distributions. A Kalman filter however only works in the case of systems where the mechanics are linear. This is where the Extended Kalman Filter (EKF) comes in. An EKF uses an approximation to find the resultant distribution after a prior distribution is transformed by a non-linear function.
 The robot will compute its expected position based on its position and the movement command. It will also make independent measurements of its position using sensors. These two measurements will be combined through use of an EKF in such a way that the position uncertainty is reduced. The Kalman Gain or the reduction in the robot position uncertainty is inversely proportional to the sensor uncertainty. The better the sensor, the higher will be the Kalman Gain and the less uncertainty there will be in the robot position\cite{stachniss}.
 
-\section{Problem description}
+\section{Problem Statement}
 \subsection{The Bayes Filter}
 
 The Bayes Filter is an algorithm used for calculating beliefs\cite{thrun}. In our case it is the belief of the robot position. This algorithm is used to compute the belief probability distribution $bel$ from measurement and control data. The measurement data is obtained from sensors and the control data is obtained from the robot command or telemetry. 
@@ -639,7 +638,7 @@ As can be seen, the EKF algorithm is similar to the Kalman filter algorithm in m
 \section{Approach/Methods}
 \section{Results}
 \section{Discussion}
-\section{Future work}
+\section{Conclusions and Future work}
 % An example of a floating figure using the graphicx package.
 % Note that \label must occur AFTER (or within) \caption.
 % For figures, \caption should occur after the \includegraphics.
@@ -789,10 +788,39 @@ Thrun, Sebastian, Wolfram Burgard, and Dieter Fox, \emph{Probabilistic Robotics}
 \bibitem{stachniss}
 Stachniss, Cyrill, \emph{SLAM Course - WS13/14}, YouTube. YouTube, n.d. Web. 18 Sept. 2015. \url{https://www.youtube.com/ playlist?list=PLgnQpQtFTOGQrZ4O5QzbIHgl3b1JHimN_}.
 
+\bibitem{maybeck}
+Maybeck, Peter S., and George M. Siouris. "Stochastic models, estimation, and control, volume i." IEEE Transactions on Systems, Man, and Cybernetics 5.10 (1980): 282.
+
 \end{thebibliography}
 
+\section{Supplementary Materials}
+\subsection{Combining two Gaussian distributions}
+\label{sssec:num1} 
+Figure \ref{CombineGaussians} shows two Gaussian distributions for the position of a robot in dotted lines with means $z_1$ and $z_2$ and standard deviations $\sigma_{z_1}$ and $\sigma_{z_2}$ respectively. The resulting distribution obtained by combining these two distributions is shown in the solid line with mean $\mu$ and standard deviation $\sigma$.\\
 
+The mean for the resulting distribution is given by\cite{maybeck}
+\begin{equation}\label{CombinedMean}
+\mu = (\frac{\sigma_{z_2}^2}{\sigma_{z_1}^2 + \sigma_{z_2}^2})z_1 + (\frac{\sigma_{z_1}^2}{\sigma_{z_1}^2 + \sigma_{z_2}^2})z_2
+\end{equation}
 
+and the variance for the resulting distribution is given by
+
+\begin{equation}\label{CombinedVariance}
+\frac{1}{\sigma^2}=\frac{1}{\sigma_{z_1}^2}+\frac{1}{\sigma_{z_2}^2}
+\end{equation}
+
+\begin{figure}
+\centering
+\includegraphics[width=3.5in, height=3.5in]{./figures/CombineGaussians.png}
+\caption{Conditional density of position based on data $z_1$ and $z_2$\cite{maybeck}. x-axis=position, y-axis-probability of being at the position}
+\label{CombineGaussians}
+\end{figure}
+
+If the uncertainties $\sigma_{z_1}$ and $\sigma_{z_2}$ of the two distributions are equal, based on equation \ref{CombinedMean} the expected mean of the resulting distribution (the expected robot position) is just the average of the two or in other words, a position exactly between the two locations $\sigma_{z_1}$ and $\sigma_{z_2}$\cite{maybeck}.\\
+
+On the other hand if $\sigma_{z_1}$ were larger than $\sigma_{z_2}$, which is to say that the uncertainty involved in the measurement of $z_1$ is greater than that of $z_2$, then equation \ref{CombinedMean} dictates weighing $z_2$ more heavily than $z_1$. Which means the expected robot position will be closer to $z_2$. This is the scenario shown in figure \ref{CombineGaussians}.\\
+
+As per equation \ref{CombinedVariance}, the uncertainty of the resulting distribution is less than $\sigma_{z_2}$ even if $\sigma_{z_1}$ is very large. That is to say that the uncertainty of the resulting distribution is less than either of the two uncertainties. This may seem counter-intuitive, but even if very poor quality data is taken into consideration, it does provide some information and thus will increase the precision of a measurement.
 
 % that's all folks
 \end{document}

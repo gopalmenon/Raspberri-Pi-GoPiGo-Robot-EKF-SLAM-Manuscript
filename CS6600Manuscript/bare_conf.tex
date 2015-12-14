@@ -657,6 +657,67 @@ The Extended Kalman filter algorithm is given below
 \end{minipage}\\\\
 
 As can be seen, the EKF algorithm is similar to the Kalman filter algorithm in may ways. EKFs use Jacobians $G_t$ and $H_t$ instead of the corresponding linear system matrices $A_t$, $B_t$ and $C_t$ in Kalman filters. The Jacobian $G_t$ corresponds to the matrices $A_t$ and $B_t$, and the Jacobian $H_t$ corresponds to $C_t$. The Jacobians are actually the linear approximations of the non-linear functions at the mean of the random variable that is being transformed.
+\subsection{EKF SLAM Explanation}
+\begin{figure}[!t]
+\centering
+\includegraphics[width=3.5in]{./figures/GraphicalSlam.png}
+\caption{A graphical model of the SLAM algorithm \cite{thrun}.}
+\label{GraphicalSlam}
+\end{figure}
+A graphical model of the SLAM algorithm is shown in figure \ref{GraphicalSlam}. The estimated mean of the robot pose (X coordinate, Y coordinate and robot orientation) is depicted by the circles containing the x with subscript. The circles with u and a subscript stand for the motion command at the location. The circle with m stands for a landmark and the circles with z and subscript stand for sensor measurements of the landmarks taken at the robot pose that the circle is attached to.\\
+
+When the robot is at pose $x_k$ it takes measurement $z_{k,i}$ of landmark $m_i$. It then issues a move command $u_k$ and moves to pose $x_{k+1}$. At $x_{k+1}$ the robot computes a revised estimate of the mean of its pose by taking into account its previous pose estimate $x_k$ and the motion command $u_k$. This is represented in line $2$ of algorithm \ref{AlgEkf} for the Extended Kalman Filter, where $g$ represents the non-linear transformation function for the mean value of the robot pose.\\
+
+Since location uncertainty increases with each move, the robot computes its new location uncertainty by using the Jacobian of the $G$ of the move transformation function $g$ and the covariance matrix that represents its movement uncertainty. This movement uncertainty represents how much the robot actual location differs from its expected location after a move. It is a measure of the precision of the robot movement mechanism. This step is shown in line $3$ of the EKF algorithm. Here  $\overline \Sigma_t$ is the new location uncertainty, $G_t$ is the Jacobian of the movement transformation function at pose $x_t$, $\Sigma_{t-1}$ is the previous location uncertainty and $R_t$ is the covariance matrix representing the precision of the robot movement mechanism. Lines $2$ and $3$ represent the prediction step of the EKF algorithm.\\
+
+The robot saves the location and signature of each landmark it has seen in its pose \cite{thrun} and when it sees a new landmark, it adds it to the pose, which is a state vector of the form
+
+\begin{equation}\label{StateVector}
+\begin{aligned}
+y_t &= \begin{pmatrix}
+		x_t\\
+		y_t
+	   \end{pmatrix}\\
+& = (x~y~\theta~m_{1,x}~m_{1,y}~s_1~m_{2,x}~m_{2,y}~s_2~\ldots~m_{N,x}~m_{N,y}~s_N)^T\\
+\end{aligned}
+\end{equation}
+
+Here $x$, $y$ and $\theta$ denote the robot's coordinates at time $t$ (not to be confused with the state variables $x_t$ and $y_t$), $m_{i,x}$ and $m_{i,y}$ are the coordinates of the $i$-th landmark, for $i=1,\dots,N$, and $s_i$ is its signature.\\
+
+At each time $t$, the robot uses its sensor to find the range and bearing to known landmarks (known $x$ and $y$ landmark coordinates). Each such sensor reading is represented by $z_t$. At each robot location, it can compute the expected sensor reading using a non-linear function $h$, where $h(\overline \mu_t)$ returns the expected sensor reading at the location based on one of the known landmarks. Since the robot has already computed its expected location $\overline \mu_t$ and it knows the landmark coordinates, it can easily compute the expected sensor reading using trigonometry. This is the non-linear function $h$.\\
+
+Line $4$ of the EKF algorithm shows the computation of the Kalman Gain $K_t$.  $H_t$ represents the Jacobian of the non-linear function $h$ and $Q_t$ is a covariance matrix that represents the uncertainty in the sensor reading. $Q_t$ is of the form
+
+\begin{equation}\label{StateVector}
+Q_t = \begin{pmatrix}
+		\sigma_r &0 &0\\
+		0 &\sigma_{\phi} &0\\
+		0 &0 &\sigma_{s}
+	   \end{pmatrix}\\
+\end{equation}
+
+where $r$ denotes the range to a landmark, $\phi$ is the bearing to a landmark and $s$ the landmark signature. The terms $\sigma_r$, $\sigma_{\phi}$ and $\sigma_{s}$ are the corresponding covariances.\\
+
+In line $4$, when the sensor measurement uncertainty is high, the Kalman Gain is low and vice versa. This Kalman Gain is used in line $5$, to compute a better estimate of the robot expected mean location. The Kalman Gain is again used in line $6$ to compute a better estimate of the uncertainty, thereby reducing the location uncertainty.\\
+
+The newly computed location and uncertainty, $\mu_t$ and $\Sigma_t$ are returned in line $7$ of the algorithm.\\
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=3.5in]{./figures/EssSlam.png}
+\caption{The essential SLAM problem \cite{slam1}. A simultaneous estimate of both robot and landmark locations is done. The true locations are never known or measured directly. Observations are made between true robot and landmark locations.}
+\label{EssSlam}
+\end{figure}
+
+Figure \ref{EssSlam} shows EKF SLAM in operation. The robot moves through the environment and simultaneously estimates both its own location and those of the landmarks. Due to uncertainties in robot movement and sensor measurements, the true locations are never known, but an estimate consisting of a mean value and covariance is computed. The estimated mean value may be different from the true one, but all the estimates are correlated with each other. As the robot moves through the environment, and observes the same landmark multiple times, the correlations between landmarks increases. Landmarks that the robot can observe together, end up being more correlated with each other. This is shown in figure \ref{SpringSlam} where the increased correlation is shown by thicker red springs. All landmarks locations are correlated with each other and the robot, with the landmarks that can be observed at the same time being more strongly correlated and represented by thicker springs.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=3.5in]{./figures/SpringSlam.png}
+\caption{Spring network analogy \cite{slam1}. The landmarks are connected by springs describing correlations between landmarks. As the vehicle moves back and forth through the environment, spring stiffness or correlations increase (red links become thicker). As landmarks are observed and estimated locations are corrected, these changes are propagated through the spring network. Note, the robot itself is correlated to the map.}
+\label{SpringSlam}
+\end{figure}
+
 \subsection{Implementing the EKF}
 
 Python libraries used and GoPiGo libraries

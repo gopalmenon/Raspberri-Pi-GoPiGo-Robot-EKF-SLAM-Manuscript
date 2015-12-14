@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.12.12)  13 DEC 2015 22:49
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.12.12)  14 DEC 2015 14:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -246,7 +246,11 @@ LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 129.
 \l_MT_below_intertext_sep=\dimen141
 \l_MT_above_shortintertext_sep=\dimen142
 \l_MT_below_shortintertext_sep=\dimen143
-) (./bare_conf.aux)
+) (./bare_conf.aux
+
+LaTeX Warning: Label `StateVector' multiply defined.
+
+)
 \openout1 = `bare_conf.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 320.
@@ -572,51 +576,133 @@ Underfull \hbox (badness 10000) in paragraph at lines 643--658
 
  []
 
+<./figures/GraphicalSlam.png, id=87, 244.2726pt x 157.5486pt>
+File: ./figures/GraphicalSlam.png Graphic file (type png)
 
-Underfull \hbox (badness 1406) in paragraph at lines 830--831
+<use ./figures/GraphicalSlam.png>
+Package pdftex.def Info: ./figures/GraphicalSlam.png used on input line 663.
+(pdftex.def)             Requested size: 252.94499pt x 163.1447pt.
+
+Overfull \hbox (0.94499pt too wide) in paragraph at lines 663--664
+ [][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 667--668
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 669--670
+
+ []
+
+[5 <./figures/EkfXform.pdf> <./figures/GraphicalSlam.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 671--672
+
+ []
+
+
+Overfull \hbox (14.77826pt too wide) detected at line 683
+ $[] []$  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 685--686
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 687--688
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 699--700
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 701--702
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 703--704
+
+ []
+
+<./figures/EssSlam.png, id=111, 326.6604pt x 275.1078pt>
+File: ./figures/EssSlam.png Graphic file (type png)
+
+<use ./figures/EssSlam.png>
+Package pdftex.def Info: ./figures/EssSlam.png used on input line 707.
+(pdftex.def)             Requested size: 252.94499pt x 213.02582pt.
+
+Overfull \hbox (0.94499pt too wide) in paragraph at lines 707--708
+ [][] 
+ []
+
+<./figures/SpringSlam.png, id=112, 244.2726pt x 194.1654pt>
+File: ./figures/SpringSlam.png Graphic file (type png)
+
+<use ./figures/SpringSlam.png>
+Package pdftex.def Info: ./figures/SpringSlam.png used on input line 716.
+(pdftex.def)             Requested size: 252.94499pt x 201.06212pt.
+
+Overfull \hbox (0.94499pt too wide) in paragraph at lines 716--717
+ [][] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [6 <./figures/EssSlam.png>]
+Underfull \hbox (badness 1406) in paragraph at lines 891--892
 []\OT1/ptm/m/n/8 Thrun, Se-bas-tian, Wol-fram Bur-gard, and Di-eter Fox, \OT1/p
 tm/m/it/8 Prob-a-bilis-tic
  []
 
 
-Underfull \hbox (badness 3189) in paragraph at lines 833--834
+Underfull \hbox (badness 3189) in paragraph at lines 894--895
 []\OT1/ptm/m/n/8 Stachniss, Cyrill, \OT1/ptm/m/it/8 SLAM Course - WS13/14\OT1/p
 tm/m/n/8 , YouTube. YouTube,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 833--834
+Underfull \hbox (badness 10000) in paragraph at lines 894--895
 \OT1/ptm/m/n/8 n.d. Web. 18 Sept. 2015. $https : / / www . youtube . com / play
 list ? list =
  []
 
-[5 <./figures/EkfXform.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 843--844
+
+Underfull \hbox (badness 10000) in paragraph at lines 904--905
 
  []
 
-<./figures/CombineGaussians.png, id=108, 1229.59375pt x 1229.59375pt>
+<./figures/CombineGaussians.png, id=117, 1229.59375pt x 1229.59375pt>
 File: ./figures/CombineGaussians.png Graphic file (type png)
 
 <use ./figures/CombineGaussians.png>
-Package pdftex.def Info: ./figures/CombineGaussians.png used on input line 858.
+Package pdftex.def Info: ./figures/CombineGaussians.png used on input line 919.
 
 (pdftex.def)             Requested size: 252.93141pt x 252.93141pt.
 
-Overfull \hbox (0.93141pt too wide) in paragraph at lines 858--859
+Overfull \hbox (0.93141pt too wide) in paragraph at lines 919--920
  [][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 863--864
+Underfull \hbox (badness 10000) in paragraph at lines 924--925
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 865--866
+Underfull \hbox (badness 10000) in paragraph at lines 926--927
 
  []
 
+[7 <./figures/SpringSlam.png> <./figures/CombineGaussians.png>]
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -628,19 +714,21 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[6 <./figures/CombineGaussians.png>] (./bare_conf.aux)
+[8
 
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+] (./bare_conf.aux)
+
+LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 4207 strings out of 493304
- 64864 string characters out of 6139870
- 143061 words of memory out of 5000000
- 7607 multiletter control sequences out of 15000+600000
+ 4226 strings out of 493304
+ 65300 string characters out of 6139870
+ 143133 words of memory out of 5000000
+ 7623 multiletter control sequences out of 15000+600000
  38484 words of font info for 75 fonts, out of 8000000 for 9000
  960 hyphenation exceptions out of 8191
- 51i,10n,27p,1954b,334s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 51i,15n,27p,1954b,334s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist
@@ -657,10 +745,10 @@ st/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/typ
 e1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/ut
 mbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on bare_conf.pdf (6 pages, 659931 bytes).
+Output written on bare_conf.pdf (8 pages, 807559 bytes).
 PDF statistics:
- 165 PDF objects out of 1000 (max. 8388607)
- 123 compressed objects within 2 object streams
+ 179 PDF objects out of 1000 (max. 8388607)
+ 129 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 26 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 41 words of extra memory for PDF output out of 10000 (max. 10000000)
 

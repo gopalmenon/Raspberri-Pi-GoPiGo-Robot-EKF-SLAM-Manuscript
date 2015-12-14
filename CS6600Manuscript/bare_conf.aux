@@ -44,31 +44,46 @@
 \citation{thrun}
 \citation{thrun}
 \citation{thrun}
+\citation{thrun}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Illustration of linearization applied by the EKF \cite  {thrun}. Instead of passing the Gaussian through the nonlinear function g, it is passed through a linear approximation of g. The linear function is tangent to g at the mean of the original Gaussian. The resulting Gaussian is shown as the dashed line in the upper left graph. The linearization incurs an approximation error, as indicated by the mismatch between the linearized Gaussian (dashed) and the Gaussian computed from the highly accurate Monte-Carlo estimate (solid).}}{5}}
+\newlabel{EkfXform}{{4}{5}}
+\newlabel{transition}{{17}{5}}
+\newlabel{measurement}{{18}{5}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces A graphical model of the SLAM algorithm \cite  {thrun}.}}{5}}
+\newlabel{GraphicalSlam}{{5}{5}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {3}{\ignorespaces Extended Kalman Filter Algorithm}}{5}}
+\newlabel{AlgEkf}{{3}{5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-E}}EKF SLAM Explanation}{5}}
+\citation{thrun}
+\citation{slam1}
+\citation{slam1}
+\citation{slam1}
+\citation{slam1}
+\newlabel{StateVector}{{19}{6}}
+\newlabel{StateVector}{{20}{6}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces The essential SLAM problem \cite  {slam1}. A simultaneous estimate of both robot and landmark locations is done. The true locations are never known or measured directly. Observations are made between true robot and landmark locations.}}{6}}
+\newlabel{EssSlam}{{6}{6}}
 \bibcite{dexter}{1}
 \bibcite{slam1}{2}
 \bibcite{slam2}{3}
 \bibcite{thrun}{4}
 \bibcite{stachniss}{5}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Illustration of linearization applied by the EKF \cite  {thrun}. Instead of passing the Gaussian through the nonlinear function g, it is passed through a linear approximation of g. The linear function is tangent to g at the mean of the original Gaussian. The resulting Gaussian is shown as the dashed line in the upper left graph. The linearization incurs an approximation error, as indicated by the mismatch between the linearized Gaussian (dashed) and the Gaussian computed from the highly accurate Monte-Carlo estimate (solid).}}{5}}
-\newlabel{EkfXform}{{4}{5}}
-\newlabel{transition}{{17}{5}}
-\newlabel{measurement}{{18}{5}}
-\@writefile{loa}{\contentsline {algorithm}{\numberline {3}{\ignorespaces Extended Kalman Filter Algorithm}}{5}}
-\newlabel{AlgEkf}{{3}{5}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-E}}Implementing the EKF}{5}}
-\@writefile{toc}{\contentsline {section}{\numberline {IV}Results}{5}}
-\@writefile{toc}{\contentsline {section}{\numberline {V}Discussion}{5}}
-\@writefile{toc}{\contentsline {section}{\numberline {VI}Conclusions and Future work}{5}}
-\@writefile{toc}{\contentsline {section}{References}{5}}
 \bibcite{maybeck}{6}
 \citation{maybeck}
 \citation{maybeck}
 \citation{maybeck}
 \citation{maybeck}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Conditional density of position based on data $z_1$ and $z_2$ \cite  {maybeck}. x-axis=position, y-axis-probability of being at the position}}{6}}
-\newlabel{CombineGaussians}{{5}{6}}
-\@writefile{toc}{\contentsline {section}{\numberline {VII}Supplementary Materials}{6}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VII-A}}Combining two Gaussian distributions}{6}}
-\newlabel{sssec:num1}{{\unhbox \voidb@x \hbox {VII-A}}{6}}
-\newlabel{CombinedMean}{{19}{6}}
-\newlabel{CombinedVariance}{{20}{6}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Spring network analogy \cite  {slam1}. The landmarks are connected by springs describing correlations between landmarks. As the vehicle moves back and forth through the environment, spring stiffness or correlations increase (red links become thicker). As landmarks are observed and estimated locations are corrected, these changes are propagated through the spring network. Note, the robot itself is correlated to the map.}}{7}}
+\newlabel{SpringSlam}{{7}{7}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-F}}Implementing the EKF}{7}}
+\@writefile{toc}{\contentsline {section}{\numberline {IV}Results}{7}}
+\@writefile{toc}{\contentsline {section}{\numberline {V}Discussion}{7}}
+\@writefile{toc}{\contentsline {section}{\numberline {VI}Conclusions and Future work}{7}}
+\@writefile{toc}{\contentsline {section}{References}{7}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Conditional density of position based on data $z_1$ and $z_2$ \cite  {maybeck}. x-axis=position, y-axis-probability of being at the position}}{7}}
+\newlabel{CombineGaussians}{{8}{7}}
+\@writefile{toc}{\contentsline {section}{\numberline {VII}Supplementary Materials}{7}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VII-A}}Combining two Gaussian distributions}{7}}
+\newlabel{sssec:num1}{{\unhbox \voidb@x \hbox {VII-A}}{7}}
+\newlabel{CombinedMean}{{21}{7}}
+\newlabel{CombinedVariance}{{22}{7}}

@@ -448,7 +448,7 @@ p(x|y,z) = \frac{p(y|x,z) p(x|z)}{p(y|z)}
 
 as long as $p(y|z)>0$.\\
 
-Applying \ref{BayesRuleCondZ} on the robot position $x_t$ gives us
+Applying \ref{BayesRuleCondZ} on the robot position $x_t$ at time $t$ for measurements $z_{1:t}$ and commands $u_{1:t}$ gi	-ves us
 
 \begin{equation}\label{TargetPosterior}
 \begin{aligned}
@@ -510,7 +510,7 @@ This reduces to
 
 \subsection{The Bayes Filter Algorithm}
 
-Based on the above mathematical derivation for a Bayes Filter, we can write down the Bayes Filter Algorithm as follows
+Based on the above mathematical derivation for a Bayes Filter, we can write down the Bayes Filter Algorithm as follows \cite{thrun}
 
 \begin{minipage}{\linewidth}
   \begin{algorithm}[H]
@@ -534,7 +534,7 @@ The second step of the Bayes Filter is called the measurement update. In line 4,
 
 \subsection{The Kalman Filter}
 
-The Kalman Filter is a technique for implementing a Bayes Filter\cite{thrun}. This is used for filtering and prediction in linear Gaussian systems.\\
+The Kalman Filter is a technique for implementing a Bayes Filter  \cite{thrun}. This is used for filtering and prediction in linear Gaussian systems.\\
 
 A probability distribution of a one-dimensional normal distribution with mean $\mu$ and variance $\sigma ^2$ is given by the following Gaussian function
  
@@ -569,7 +569,7 @@ z_t = C_tx_{t} + \delta_t
 
 Here $C_t$ is a matrix of size $k \times n$, where $k$ is the dimension of the measurement vector $z_t$. The vector $\delta_t$ describes the measurement noise. The distribution of $\delta_t$ is a multivariate Gaussian with zero mean and covariance $Q_t$.\\
 
-\item Finally the initial belief $bel(x_0)$ must be normally distributed. We can denote the mean of this belief by mean $\mu_0$ and covariance $\Sigma_0$.
+\item Finally the initial belief $bel(x_0)$ must be normally distributed. We can denote the mean of this belief by mean $\mu_0$ and covariance $\Sigma_0$.\\
 \end{enumerate}
 
 The Kalman filter algorithm is given below
@@ -590,15 +590,15 @@ The Kalman filter algorithm is given below
   \end{algorithm}
 \end{minipage}\\\\
 
-The algorithm represents the belief $bel(x_t)$ at time $t$ by the mean $\mu_t$ and covariance $\Sigma_t$. The input is the belief at time $t-1$, the control $u_t$ and measurement $z_t$. The output is the belief at time $t$.\\
+The algorithm represents the belief $bel(x_t)$ at time $t$ by the mean $\mu_t$ and covariance $\Sigma_t$. The input is the belief at time $t-1$, the covariance at time $t-1$, the control $u_t$ and measurement $z_t$. The output is the belief at time $t$.\\
 
-In lines 2 and 3, the predicted belief $\overline \mu$ and $\overline \Sigma$ is calculated representing the belief $\overline{bel}(x_t)$ one time step later, but before incorporating the measurement $z_t$. This belief is obtained by incorporating the control $u_t$. The mean is updated using the deterministic state transition function \ref{Kalman1} with the mean $\mu_{t-1}$ substituted for the state $x_{t-1}$. The update of the covariance considers the fact that states depend on the previous state through the linear matrix $A_t$. The variable $K_t$ computed in line 4 is called \textit{Kalman gain}. This is the reduction is uncertainty that is obtained by combining the prediction and correction steps. The belief $\overline{bel}(x_t)$ is transformed into the desired belief ${bel}(x_t)$ in lines 5 and 6 by incorporating the measurement $z_t$. Line 5 manipulates the mean by adjusting it in proportion to the Kalman gain $K_t$ and the deviation of the actual measurement $z_t$ and the measurement predicted as per the measurement probability \ref{Kalman2}. Finally a new covariance of the posterior belief is calculated in line 6, adjusting for the information gain resulting from the measurement.\\
+In lines 2 and 3, the predicted belief $\overline \mu$ and $\overline \Sigma$ is calculated representing the belief $\overline{bel}(x_t)$ one time step later, but before incorporating the measurement $z_t$. This belief is obtained by incorporating the control $u_t$. The mean is updated using the deterministic state transition function \ref{Kalman1} with the mean $\mu_{t-1}$ substituted for the state $x_{t-1}$. The update of the covariance considers the fact that states depend on the previous state through the linear matrix $A_t$. The variable $K_t$ computed in line 4 is called \textit{Kalman gain}. This is the reduction is uncertainty that is obtained by combining the prediction and correction steps. The belief $\overline{bel}(x_t)$ is transformed into the corrected belief ${bel}(x_t)$ in lines 5 and 6 by incorporating the measurement $z_t$. Line 5 manipulates the mean by adjusting it in proportion to the Kalman gain $K_t$ and the deviation of the actual measurement $z_t$ and the measurement predicted as per the measurement probability \ref{Kalman2}. Finally a new covariance of the posterior belief is calculated in line 6, adjusting for the information gain resulting from the measurement.\\
 
 \begin{figure}[!t]
 \centering
 \includegraphics[width=3.5in]{./figures/KalmanIllustration.pdf}
 
-\caption{Illustration of Kalman filters: (a) initial belief, (b) a measurement (in bold) with the associated uncertainty, (c) belief after integrating the measurement into the belief using the Kalman filter algorithm, (d) belief after motion to the right (which introduces uncertainty), (e) a new measurement with associated uncertainty, and (f) the resulting belief.}
+\caption{Illustration of Kalman filters \cite{thrun} (x-axis=location, y-axis=probability of being in that location): (a) initial belief, (b) a measurement (in bold) with the associated uncertainty, (c) belief after integrating the measurement into the belief using the Kalman filter algorithm, (d) belief after motion to the right (which introduces uncertainty), (e) a new measurement with associated uncertainty, and (f) the resulting belief.}
 \label{KalmanIllustration}
 \end{figure}
 
@@ -613,13 +613,13 @@ As this example illustrates, the Kalman filter alternates a measurement update s
 \begin{figure}[!t]
 \centering
 \includegraphics[width=3.5in]{./figures/KalmanXform.pdf}
-\caption{Linear transformation of a Gaussian random variable. The lower right plot show the density of the original random variable, X. This random variable is passed through the function displayed in the upper right graph (the transformation of the mean is indicated by the dotted line). The density of the resulting random variable Y is plotted in the upper left graph.}
+\caption{Linear transformation of a Gaussian random variable \cite{thrun}. The lower right plot show the density of the original random variable, X. This random variable is passed through the function displayed in the upper right graph (the transformation of the mean is indicated by the dotted line). The density of the resulting random variable Y is plotted in the upper left graph.}
 \label{KalmanXform}
 \end{figure}
 
-For a Kalman filter to work, all the transformations need to be linear. Figure \ref{KalmanXform} illustrates the linear transform of a one-dimensional Gaussian random variable. The graph on the lower right shows the density of this random variable having mean $\mu$ and variance $\sigma^2$. The random variable is passed through a linear function $y=ax+b$ shown in the upper right graph. The resulting random variable will have Gaussian distribution with mean $a\mu + b$ and variance $a^2\sigma^2$. This resulting Gaussian is sown in the upper left graph of figure \ref{KalmanXform}.\\
+For a Kalman filter to work, all the transformations need to be linear. Figure \ref{KalmanXform} illustrates the linear transform of a one-dimensional Gaussian random variable. The graph on the lower right shows the density of this random variable having mean $\mu$ and variance $\sigma^2$. The random variable is passed through a linear function $y=ax+b$ shown in the upper right graph. The resulting random variable will have Gaussian distribution with mean $a\mu + b$ and variance $a^2\sigma^2$. This resulting Gaussian is shown in the upper left graph of figure \ref{KalmanXform}.\\
 
-Unfortunately state transitions and measurements are rarely linear in practice\cite{thrun}. This renders Kalman filters inapplicable to most robotics problems. The Extended Kalman filter, or EFK, relaxes one of the assumptions. Here the assumption is that state transition probabilities and landmark measurement probabilities are governed by nonlinear functions $g$ and $h$ respectively:
+Unfortunately state transitions and measurements are rarely linear in practice \cite{thrun}. This renders Kalman filters inapplicable to most robotics problems. The Extended Kalman filter, or EKF, relaxes one of the assumptions. Here the assumption is that state transition probabilities and landmark measurement probabilities are governed by nonlinear functions $g$ and $h$ respectively:
 \begin{equation}\label{transition}
 x_{t} = g(u_{t}, x_{t-1}) + \varepsilon_{t}
 \end{equation}
@@ -632,11 +632,11 @@ Here $x_{t}$ is the robot location at time $t$, $u_{t}$ is the robot command tha
 \begin{figure}[!t]
 \centering
 \includegraphics[width=3.5in]{./figures/EkfXform.pdf}
-\caption{Illustration of linearization applied by the EKF. Instead of passing the Gaussian through the nonlinear function g, it is passed through a linear approximation of g. The linear function is tangent to g at the mean of the original Gaussian. The resulting Gaussian is shown as the dashed line in the upper left graph. The linearization incurs an approximation error, as indicated by the mismatch between the linearized Gaussian (dashed) and the Gaussian computed from the highly accurate Monte-Carlo estimate (solid).}
+\caption{Illustration of linearization applied by the EKF \cite{thrun}. Instead of passing the Gaussian through the nonlinear function g, it is passed through a linear approximation of g. The linear function is tangent to g at the mean of the original Gaussian. The resulting Gaussian is shown as the dashed line in the upper left graph. The linearization incurs an approximation error, as indicated by the mismatch between the linearized Gaussian (dashed) and the Gaussian computed from the highly accurate Monte-Carlo estimate (solid).}
 \label{EkfXform}
 \end{figure}
 
-Figure \ref{EkfXform} illustrates the impact of a nonlinear transformation on a Gaussian random variable. The graph on the upper right plots the nonlinear function $g$. As you can see, the transformed function is not a Gaussian. The idea behind the EKF is linearization. The nonlinear function is approximated at mean of the Gaussian. Projecting this Gaussian through this linear approximation results in a Gaussian density as represented by the dotted line in the upper left of figure \ref{EkfXform}.
+Figure \ref{EkfXform} illustrates the impact of a nonlinear transformation on a Gaussian random variable. The graph on the upper right plots the nonlinear function $g$. As you can see, the transformed function is not a Gaussian. The idea behind the EKF is linearization. The nonlinear function is approximated at mean of the Gaussian. Projecting this Gaussian through this linear approximation results in a Gaussian density as represented by the dotted line in the upper left of figure \ref{EkfXform}.\\
 
 The Extended Kalman filter algorithm is given below
 
@@ -656,10 +656,33 @@ The Extended Kalman filter algorithm is given below
   \end{algorithm}
 \end{minipage}\\\\
 
-As can be seen, the EKF algorithm is similar to the Kalman filter algorithm in may ways. EKFs use Jacobians $G_t$ and $H_t$ instead of the corresponding linear system matrices $A_t$, $B_t$ and $C_t$ in Kalman filters. The Jacobian $G_t$ corresponds to the matrices $A_t$ and $B_t$, and the Jacobian $H_t$ corresponds to $C_t$.
+As can be seen, the EKF algorithm is similar to the Kalman filter algorithm in may ways. EKFs use Jacobians $G_t$ and $H_t$ instead of the corresponding linear system matrices $A_t$, $B_t$ and $C_t$ in Kalman filters. The Jacobian $G_t$ corresponds to the matrices $A_t$ and $B_t$, and the Jacobian $H_t$ corresponds to $C_t$. The Jacobians are actually the linear approximations of the non-linear functions at the mean of the random variable that is being transformed.
+\subsection{Implementing the EKF}
+
+Python libraries used and GoPiGo libraries
+Calibration of the robot movement and sensing. Provide reference to data in section VII
+Computing covariance matrices for movement and sensing
+Movement using encoders. Forward, backwards and rotate in place.
+Sense obstacles and return range and bearing
+Obstacle Navigation using above functions
+Movement equations
+Robot pose prediction, movement jacobian and pose covariance
+Problems in rangefinder accuracy
+Correction step not implemented
+
 \section{Results}
+Sebsor accuracy problem
+Robot residual drift handled by covariance
+Sense inaccuracy covered by covariance
+
 \section{Discussion}
+The kalman gain and its awesome potential
+Uses in rockets, missiles, battery charge estimation
+
 \section{Conclusions and Future work}
+Need better sensor. Investigate x-box sensor for range and visual
+
+
 % An example of a floating figure using the graphicx package.
 % Note that \label must occur AFTER (or within) \caption.
 % For figures, \caption should occur after the \includegraphics.

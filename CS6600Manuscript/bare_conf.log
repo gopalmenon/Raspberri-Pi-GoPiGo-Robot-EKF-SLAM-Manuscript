@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.12.12)  13 DEC 2015 17:13
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.12.12)  13 DEC 2015 22:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -454,6 +454,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 570--571
  []
 
 
+Underfull \hbox (badness 10000) in paragraph at lines 572--573
+
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 581--582
 []\OT1/ptm/b/n/10 pro-ce-dure \OT1/ptm/m/sc/10 Kalman Fil-ter Al-go-
  []
@@ -543,6 +548,11 @@ Overfull \hbox (0.94499pt too wide) in paragraph at lines 634--635
  []
 
 
+Underfull \hbox (badness 10000) in paragraph at lines 639--640
+
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 647--648
 []\OT1/ptm/b/n/10 pro-ce-dure \OT1/ptm/m/sc/10 Ex-tended Kalman Fil-ter
  []
@@ -563,47 +573,47 @@ Underfull \hbox (badness 10000) in paragraph at lines 643--658
  []
 
 
-Underfull \hbox (badness 1406) in paragraph at lines 807--808
+Underfull \hbox (badness 1406) in paragraph at lines 830--831
 []\OT1/ptm/m/n/8 Thrun, Se-bas-tian, Wol-fram Bur-gard, and Di-eter Fox, \OT1/p
 tm/m/it/8 Prob-a-bilis-tic
  []
 
 
-Underfull \hbox (badness 3189) in paragraph at lines 810--811
+Underfull \hbox (badness 3189) in paragraph at lines 833--834
 []\OT1/ptm/m/n/8 Stachniss, Cyrill, \OT1/ptm/m/it/8 SLAM Course - WS13/14\OT1/p
 tm/m/n/8 , YouTube. YouTube,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 810--811
+Underfull \hbox (badness 10000) in paragraph at lines 833--834
 \OT1/ptm/m/n/8 n.d. Web. 18 Sept. 2015. $https : / / www . youtube . com / play
 list ? list =
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 820--821
+[5 <./figures/EkfXform.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 843--844
 
  []
 
-<./figures/CombineGaussians.png, id=87, 1229.59375pt x 1229.59375pt>
+<./figures/CombineGaussians.png, id=108, 1229.59375pt x 1229.59375pt>
 File: ./figures/CombineGaussians.png Graphic file (type png)
 
 <use ./figures/CombineGaussians.png>
-Package pdftex.def Info: ./figures/CombineGaussians.png used on input line 835.
+Package pdftex.def Info: ./figures/CombineGaussians.png used on input line 858.
 
 (pdftex.def)             Requested size: 252.93141pt x 252.93141pt.
 
-Overfull \hbox (0.93141pt too wide) in paragraph at lines 835--836
+Overfull \hbox (0.93141pt too wide) in paragraph at lines 858--859
  [][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 840--841
+Underfull \hbox (badness 10000) in paragraph at lines 863--864
 
  []
 
-[5 <./figures/EkfXform.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 842--843
+
+Underfull \hbox (badness 10000) in paragraph at lines 865--866
 
  []
 
@@ -618,9 +628,11 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[6
+[6 <./figures/CombineGaussians.png>] (./bare_conf.aux)
 
- <./figures/CombineGaussians.png>] (./bare_conf.aux) ) 
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
 Here is how much of TeX's memory you used:
  4207 strings out of 493304
  64864 string characters out of 6139870
@@ -629,24 +641,23 @@ Here is how much of TeX's memory you used:
  38484 words of font info for 75 fonts, out of 8000000 for 9000
  960 hyphenation exceptions out of 8191
  51i,10n,27p,1954b,334s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf
--dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-mi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb
-></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/te
-xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-urw/palatino/uplb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino
-/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></u
-sr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/urw/times/utmri8a.pfb>
-Output written on bare_conf.pdf (6 pages, 658896 bytes).
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6
+.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></u
+sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/sha
+re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/share/texlive/texmf-di
+st/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/typ
+e1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/ut
+mbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on bare_conf.pdf (6 pages, 659931 bytes).
 PDF statistics:
  165 PDF objects out of 1000 (max. 8388607)
  123 compressed objects within 2 object streams

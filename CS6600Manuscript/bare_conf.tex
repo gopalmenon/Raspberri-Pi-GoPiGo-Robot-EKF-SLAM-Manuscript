@@ -1023,5 +1023,26 @@ G_t &= I + \frac{\partial}{\partial(x~y~\theta)^T}
 \end{aligned}
 \end{equation}
 
+where $I$ is the identity matrix. For the rotate in place operation, the Jacobian is given by
+
+\begin{equation}\label{MovementJacobian}
+\begin{aligned}
+G_t &= I + \frac{\partial}{\partial(x~y~\theta)^T}
+\begin{pmatrix}
+	0\\
+	0\\
+	\theta'
+\end{pmatrix}\\
+&= I + 
+\begin{pmatrix}
+	0 &0 &0\\
+	0 &0 &0\\
+	0 &0 &0
+\end{pmatrix}\\
+&= I
+\end{aligned}
+\end{equation}
+
+
 % that's all folks
 \end{document}

@@ -116,7 +116,7 @@
 \usepackage[fleqn]{amsmath}
 \usepackage{algorithm,algpseudocode}
 \usepackage{mathtools}
-
+\usepackage{gensymb}
 
 % *** GRAPHICS RELATED PACKAGES ***
 %
@@ -678,7 +678,7 @@ y_t &= \begin{pmatrix}
 		x_t\\
 		y_t
 	   \end{pmatrix}\\
-& = (x~y~\theta~m_{1,x}~m_{1,y}~s_1~m_{2,x}~m_{2,y}~s_2~\ldots~m_{N,x}~m_{N,y}~s_N)^T\\
+& = (x~y~\theta~m_{1,x}~m_{1,y}~s_1~\ldots~m_{N,x}~m_{N,y}~s_N)^T\\
 \end{aligned}
 \end{equation}
 
@@ -688,7 +688,7 @@ At each time $t$, the robot uses its sensor to find the range and bearing to kno
 
 Line $4$ of the EKF algorithm shows the computation of the Kalman Gain $K_t$.  $H_t$ represents the Jacobian of the non-linear function $h$ and $Q_t$ is a covariance matrix that represents the uncertainty in the sensor reading. $Q_t$ is of the form
 
-\begin{equation}\label{StateVector}
+\begin{equation}\label{CovarianceMatrix}
 Q_t = \begin{pmatrix}
 		\sigma_r &0 &0\\
 		0 &\sigma_{\phi} &0\\
@@ -709,7 +709,7 @@ The newly computed location and uncertainty, $\mu_t$ and $\Sigma_t$ are returned
 \label{EssSlam}
 \end{figure}
 
-Figure \ref{EssSlam} shows EKF SLAM in operation. The robot moves through the environment and simultaneously estimates both its own location and those of the landmarks. Due to uncertainties in robot movement and sensor measurements, the true locations are never known, but an estimate consisting of a mean value and covariance is computed. The estimated mean value may be different from the true one, but all the estimates are correlated with each other. As the robot moves through the environment, and observes the same landmark multiple times, the correlations between landmarks increases. Landmarks that the robot can observe together, end up being more correlated with each other. This is shown in figure \ref{SpringSlam} where the increased correlation is shown by thicker red springs. All landmarks locations are correlated with each other and the robot, with the landmarks that can be observed at the same time being more strongly correlated and represented by thicker springs.
+Figure \ref{EssSlam} shows EKF SLAM in operation. The robot moves through the environment and simultaneously estimates both its own location and those of the landmarks. Due to uncertainties in robot movement and sensor measurements, the true locations are never known, but an estimate consisting of a mean value and covariance is computed. The estimated mean value may be different from the true one, but all the estimates are correlated with each other. As the robot moves through the environment, and observes the same landmark multiple times, the correlations between landmarks increases. Landmarks that the robot can observe together, end up being more correlated with each other. This is shown in figure \ref{SpringSlam} where the increased correlation is shown by thicker red springs. All landmarks locations are correlated with each other and the robot, with the landmarks that can be observed at the same time being more strongly correlated and represented by thicker springs.\\
 
 \begin{figure}[!t]
 \centering
@@ -718,16 +718,32 @@ Figure \ref{EssSlam} shows EKF SLAM in operation. The robot moves through the en
 \label{SpringSlam}
 \end{figure}
 
+Figure \ref{ObstacleLikelihood} shows a robot that is sensing three obstacles shown in gray in figure \ref{ObstacleLikelihood}(a). Figure \ref{ObstacleLikelihood}(b) shows the likelihood of the robot sensing the obstacles. The darker the location, the less likely is the robot to perceive an obstruction there. The sharp definitions of the actual obstacles are turned into blurred images that represent the uncertainty in the measurement of the obstacle coordinates and the signature. The higher the Kalman Gain, the less blurred the perceived obstacles will be.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=3.5in]{./figures/ObstacleLikelyhood.png}
+\caption{(a) Example environment with three obstacles in gray. The robot is located towards the bottom of the figure and takes a measurement $z_t^k$ as indicated by the dashed line. (b) Likelihood field for this obstacle configuration. The darker the location, the less likely is the robot to perceive an obstacle there. \cite{thrun}}
+\label{ObstacleLikelihood}
+\end{figure}
+
 \subsection{Implementing the EKF}
 
-Python libraries used and GoPiGo libraries
-Calibration of the robot movement and sensing. Provide reference to data in section VII
-Computing covariance matrices for movement and sensing
-Movement using encoders. Forward, backwards and rotate in place.
-Sense obstacles and return range and bearing
-Obstacle Navigation using above functions
-Movement equations
-Robot pose prediction, movement jacobian and pose covariance
+The robot manufacturer provides a Python library with movement control and rangefinder functions. The movement control functions provide for precision movement using encoders disks that are attached to the wheel axle. The robot wheels can be independently made to go forward or backward a specific number of encoder steps. The rangefinder can be pointed at any angle in front of the robot and will return the distance in centimeters to an obstacle that the sensor is pointing to. The python NumPy library was for matrix and array operations.\\
+
+The robot can be moved forward, backwards, clockwise or anti-clockwise in place through use of Python library functions. For the movement to have a degree of precision, it is done under encoder control. Here the number of encoder steps is computed for the required forward or backward movement distance or in place rotation angle. This computed encoder target is sent to the robot encoders and the movement command issued. The program needs to wait till the target encoder value is reached.\\
+
+The ultrasonic rangefinder can be made to point to a specified angle in front of the robot. It can then be queried to return the range to the obstacle in front. The bearing to the obstacle is determined by the angle that the rangefinder is made to point to.\\
+
+The robot was calibrated by giving move and rotation commands and then finding out the movement error by measuring the actual movement with a tape measure and finding the difference with the expected movement. This was repeated thirty times each for forward movement and rotation in place. These are the only two move commands that were implemented. The recorded error values for $x$ and $y$ coordinates and the robot orientation $\theta$ were used for computing the movement uncertainty covariance matrix $R_t$ using the Python function $numpy.ma.cov()$.\\
+
+The obstacle sensing uncertainty was measured in a similar manner by finding the difference between the range and bearing returned by the sensor to actual values that were measured using a tape measure and digital protractor. Fifteen error readings were taken in all for the rangefinder uncertainty covariance matrix $Q_t$.\\
+
+The robot has an outer navigation control loop where it scans for obstacles and changes orientation in steps till it finds an obstacle. It then moves towards the nearest obstacle and stops when it reaches within $2.5$ robot lengths. Then it turns $45\degree$ left or right based on a random selection and repeats the process.\\
+
+The robot movement equations represented by function $g$ mentioned in line $2$ of the EKF algorithm are given in section \ref{sssec:num2}. These equations are for the case of the robot moving forward by a specified amount and for the robot rotating in place by a specified angle. No other robot motion has been implemented and the robot does not move back or move in an arc. The movement equations are used for finding the predicted mean location $\overline \mu_t$ after a move command as described in line $2$ of the EKF algorithm.
+
+movement jacobian 
 Problems in rangefinder accuracy
 Correction step not implemented
 
@@ -927,7 +943,78 @@ On the other hand if $\sigma_{z_1}$ were larger than $\sigma_{z_2}$, which is to
 
 As per equation \ref{CombinedVariance}, the uncertainty of the resulting distribution is less than $\sigma_{z_2}$ even if $\sigma_{z_1}$ is very large. That is to say that the uncertainty of the resulting distribution is less than either of the two uncertainties. This may seem counter-intuitive, but even if very poor quality data is taken into consideration, it does provide some information and thus will increase the precision of a measurement.
 
+\subsection{Robot Motion Equation}
+\label{sssec:num2} 
+
+\begin{figure}
+\centering
+\includegraphics[width=3.5in]{./figures/RobotPose.png}
+\caption{Robot initial pose at coordinate $(x,y)$ and at an orientation of $\theta$. The robot pose is at the base of the blue arrow. The robot then moves a distance d in the direction it is pointing to.}
+\label{RobotPose}
+\end{figure}
+
+The robot pose is represented by the vector $(x~y~\theta)^T$, where $x$ and $y$ are its location coordinates and $\theta$ is its orientation. The robot pose can be considered to be $(0~0~0)^T$ when it starts moving since the coordinate system does not have a specific frame of reference.\\
+
+Let us consider the case when the robot starts at pose $(x~y~\theta)^T$ and moves forward a distance $d$ in the direction it is pointing to. This is illustrated in figure \ref{RobotPose}. As per simple trigonometry, the equation for the new robot pose will be
+
+\begin{equation}\label{RobotForwardMotion}
+\begin{pmatrix}
+	x\\
+	y\\
+	\theta
+\end{pmatrix} = 
+\begin{pmatrix}
+	x\\
+	y\\
+	\theta
+\end{pmatrix}
++
+\begin{pmatrix}
+	d\cos(\theta)\\
+	d\sin(\theta)\\
+	0
+\end{pmatrix}
+\end{equation}\\
+
+This is nothing but the definition of function $g$ mentioned in line $2$ of the EKF algorithm.\\
+
+The robot can also rotate in place and in this case, the only thing that changes in the pose is the orientation. The function $g$ in this case is defined by 
+
+\begin{equation}\label{RobotInPlaceRotation}
+\begin{pmatrix}
+	x\\
+	y\\
+	\theta
+\end{pmatrix} = 
+\begin{pmatrix}
+	x\\
+	y\\
+	\theta
+\end{pmatrix}
++
+\begin{pmatrix}
+	0\\
+	0\\
+	\theta'
+\end{pmatrix}
+\end{equation}\\
+
+
+where $\theta'$ is the angle the robot is made to rotate by.
+
+\subsection{Robot Movement Jacobian}
+\label{sssec:num3} 
+
+The movement Jacobian represented by $G_t$ in line $3$ of the EKF algorithm can be obtained by finding the partial derivative of the movement function $g$ \cite{thrun}. In the case of the move forward, the Jacobian is given by
+
+\begin{equation}\label{MovementJacobian}
+G_t = I + \frac{\partial}{\partial(x~y~\theta)^T}
+\begin{pmatrix}
+	d\cos(\theta)\\
+	d\sin(\theta)\\
+	0
+\end{pmatrix}
+\end{equation}
+
 % that's all folks
 \end{document}
-
-

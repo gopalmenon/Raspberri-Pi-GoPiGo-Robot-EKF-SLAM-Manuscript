@@ -448,7 +448,7 @@ p(x|y,z) = \frac{p(y|x,z) p(x|z)}{p(y|z)}
 
 as long as $p(y|z)>0$.\\
 
-Applying \ref{BayesRuleCondZ} on the robot position $x_t$ at time $t$ for measurements $z_{1:t}$ and commands $u_{1:t}$ gi	-ves us
+Applying \ref{BayesRuleCondZ} on the robot position $x_t$ at time $t$ for measurements $z_{1:t}$ and commands $u_{1:t}$ gives us
 
 \begin{equation}\label{TargetPosterior}
 \begin{aligned}
@@ -572,7 +572,7 @@ Here $C_t$ is a matrix of size $k \times n$, where $k$ is the dimension of the m
 \item Finally the initial belief $bel(x_0)$ must be normally distributed. We can denote the mean of this belief by mean $\mu_0$ and covariance $\Sigma_0$.\\
 \end{enumerate}
 
-The Kalman filter algorithm is given below
+The Kalman filter algorithm is given below \cite{thrun}
 
 \begin{minipage}{\linewidth}
   \begin{algorithm}[H]
@@ -638,7 +638,7 @@ Here $x_{t}$ is the robot location at time $t$, $u_{t}$ is the robot command tha
 
 Figure \ref{EkfXform} illustrates the impact of a nonlinear transformation on a Gaussian random variable. The graph on the upper right plots the nonlinear function $g$. As you can see, the transformed function is not a Gaussian. The idea behind the EKF is linearization. The nonlinear function is approximated at mean of the Gaussian. Projecting this Gaussian through this linear approximation results in a Gaussian density as represented by the dotted line in the upper left of figure \ref{EkfXform}.\\
 
-The Extended Kalman filter algorithm is given below
+The Extended Kalman filter algorithm is given below \cite{thrun}
 
 \begin{minipage}{\linewidth}
   \begin{algorithm}[H]
@@ -743,21 +743,23 @@ The robot has an outer navigation control loop where it scans for obstacles and 
 
 The robot movement equations represented by function $g$ mentioned in line $2$ of the EKF algorithm are given in section \ref{sssec:num2}. These equations are for the case of the robot moving forward by a specified amount and for the robot rotating in place by a specified angle. No other robot motion has been implemented and the robot does not move back or move in an arc. The movement equations are used for finding the predicted mean location $\overline \mu_t$ after a move command as described in line $2$ of the EKF algorithm.
 
-movement jacobian 
-Problems in rangefinder accuracy
-Correction step not implemented
+The movement Jacobian can be found by deriving the parting derivative of the motion equation with respect to each component of the robot pose. This derivation is given in section \ref{sssec:num3}. This Jacobian can now be used in line $3$ of the EKF algorithm.\\
+
+The ultrasonic rangefinder on the robot did not perform well and reported the size of an obstacle as $4.8$ times of what it actually was. This was probably a combination of the low grade of the sensor and the fact that ultrasonic rangefinders are not known to be accurate. As a result of the obstacles being reported as almost five times larger than what they actually were, and because of the need to space the obstacles apart by at least this width plus the sensing uncertainty times two, the testing of the robot did not progress beyond the location prediction stage. This was due to available space limitations of where the robot could be tested. Due to this reason the correction step could not be implemented.
 
 \section{Results}
-Sebsor accuracy problem
-Robot residual drift handled by covariance
-Sense inaccuracy covered by covariance
+
+The robot is able to move around and navigate through an obstacle course. However, as described above in the previous section, the prediction step of the EKF SLAM process was not implemented.\\
+
+However, the project has not been a total loss. I have a very good understanding of the EKF SLAM process and had to get re-acquainted with probability theory, conditional probability, Bayes Rule, multivariate normal distributions, covariance and covariance matrices, Kalman and Extended Kalman Filters and the EKF SLAM process as a whole. This was a non-trivial topic to grasp and needed a lot of reading and understanding.
 
 \section{Discussion}
-The kalman gain and its awesome potential
-Uses in rockets, missiles, battery charge estimation
+
+A very important concept in EKF SLAM is the use of a Kalman or Extended Kalman Filter. These filters are used in places like the Google car, rockets, missiles, tracking of objects and precise movements of robotic arms. Kalman filters can even be used for estimating the charge in a rechargeable battery. 
+
 
 \section{Conclusions and Future work}
-Need better sensor. Investigate x-box sensor for range and visual
+The accuracy of the rangefinder was the main obstacle encountered in this project. A better sensor can probably be used to obtain a more accurate obstacle signature and continue with the project. The Xbox Kinect sensor has a camera and rangefinder built into one sensor and promises more accuracy in measurements. A Kinect would be the next step in continuing with this project.
 
 
 % An example of a floating figure using the graphicx package.
@@ -824,7 +826,7 @@ Need better sensor. Investigate x-box sensor for range and visual
 % the IEEE normally uses this smaller font for tables.
 % The \label must come after \caption as always.
 %
-%\begin{table}[!t]
+%\begin{table}[!t]Uses in rockets, missiles, battery charge estimation
 %% increase table row spacing, adjust to taste
 %\renewcommand{\arraystretch}{1.3}
 % if using array.sty, it might be a good idea to tweak the value of
@@ -899,9 +901,6 @@ GoPiGo - Dexter Industries. \emph{Dexter Industries}. N.p., n.d. Web. 06 Nov. 20
 
 \bibitem{slam1}
 Durrant-Whyte, H., and T. Bailey, \emph{Simultaneous Localization and Mapping: Part I}, IEEE Robotics and Automation Magazine. 13.2 (2006): 99-110.
-
-\bibitem{slam2}
-Bailey, Tim, and Hugh Durrant-Whyte, \emph{Simultaneous localization and mapping (SLAM): Part II}, IEEE Robotics and Automation Magazine. 13.3 (2006): 108-117.
 
 \bibitem{thrun}
 Thrun, Sebastian, Wolfram Burgard, and Dieter Fox, \emph{Probabilistic Robotics}, MIT press, 2005.
@@ -1008,12 +1007,20 @@ where $\theta'$ is the angle the robot is made to rotate by.
 The movement Jacobian represented by $G_t$ in line $3$ of the EKF algorithm can be obtained by finding the partial derivative of the movement function $g$ \cite{thrun}. In the case of the move forward, the Jacobian is given by
 
 \begin{equation}\label{MovementJacobian}
-G_t = I + \frac{\partial}{\partial(x~y~\theta)^T}
+\begin{aligned}
+G_t &= I + \frac{\partial}{\partial(x~y~\theta)^T}
 \begin{pmatrix}
 	d\cos(\theta)\\
 	d\sin(\theta)\\
 	0
+\end{pmatrix}\\
+&= I + 
+\begin{pmatrix}
+	0 &0 &-d\sin(\theta)\\
+	0 &0 &d\cos(\theta)\\
+	0 &0 &0
 \end{pmatrix}
+\end{aligned}
 \end{equation}
 
 % that's all folks

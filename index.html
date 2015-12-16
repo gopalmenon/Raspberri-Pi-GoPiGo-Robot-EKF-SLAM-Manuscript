@@ -34,7 +34,7 @@
         <h3>
 <a id="Abstract" class="anchor" href="#Abstract" aria-hidden="true"><span class="octicon octicon-link"></span></a>Abstract</h3>
 
-<p>This is an implementation of Extended Kalman Filter (EKF) Simultaneous Localization and Mapping (SLAM ) using a Raspberry Pi based GoPiGo robot that is sold by <a href="http://www.dexterindustries.com">Dexter Industries</a> in kit form. The robot has two powered wheels and a third castor wheel. It is equipped with an ultrasonic range finder that is mounted on a servo mechanism that allows for the range finder to be pointed in any direction in front of the robot.  An EKF SLAM implementation consists of two steps - prediction and correction. The prediction step has been implemented successfully. However, the correction step has not been fully implemented due to problems with the ultrasonic sensor as described below in the <a href="#ImplementationDetails">implementation details</a>.</p>
+<p>This is an implementation of Extended Kalman Filter (EKF) Simultaneous Localization and Mapping (SLAM ) using a Raspberry Pi based GoPiGo robot that is sold by <a href="http://www.dexterindustries.com" target="_blank">Dexter Industries</a> in kit form. The robot has two powered wheels and a third castor wheel. It is equipped with an ultrasonic range finder that is mounted on a servo mechanism that allows for the range finder to be pointed in any direction in front of the robot.  An EKF SLAM implementation consists of two steps - prediction and correction. The prediction step has been implemented successfully. However, the correction step has not been fully implemented due to problems with the ultrasonic sensor as described below in the <a href="#ImplementationDetails">implementation details</a>.</p>
 
 <img src="images/gopigo_kit_web.jpg" alt="GoPiGo Robot"/>
 
@@ -191,7 +191,7 @@
 <a id="ImplementationDetails" class="anchor" href="#ImplementationDetails" aria-hidden="true"><span class="octicon octicon-link"></span></a>Implementation Details</h3>
 
 <p>
-  The robot manufacturer provides a <a href="http://www.dexterindustries.com/GoPiGo/programming/python-programming-for-the-raspberry-pi-gopigo/">Python library</a> with movement control and rangefinder functions. The movement control functions provide for precision movement using encoders disks that are attached to the wheel axle. The robot wheels can be independently made to go forward or backward a specific number of encoder steps. The rangefinder can be pointed at any angle in front of the robot and will return the distance in centimeters to an obstacle that the sensor is pointing to. The python NumPy library has been used for matrix and array operations.
+  The robot manufacturer provides a <a href="http://www.dexterindustries.com/GoPiGo/programming/python-programming-for-the-raspberry-pi-gopigo/" target="_blank">Python library</a> with movement control and rangefinder functions. The movement control functions provide for precision movement using encoders disks that are attached to the wheel axle. The robot wheels can be independently made to go forward or backward a specific number of encoder steps. The rangefinder can be pointed at any angle in front of the robot and will return the distance in centimeters to an obstacle that the sensor is pointing to. The python NumPy library has been used for matrix and array operations.
 </p>
 
 <p>

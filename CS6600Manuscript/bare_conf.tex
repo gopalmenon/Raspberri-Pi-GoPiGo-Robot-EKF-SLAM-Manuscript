@@ -396,11 +396,11 @@ Robot motion is stochastic and not deterministic. A robot does not faithfully ex
 \section{Introduction}
 % no \IEEEPARstart
 \subsection{The robot platform}
-The robot used for this implementation is based on a Raspberry Pi and is manufactured and sold by Dexter Industries \cite{dexter}. The robot is equipped with an ultrasonic sensor that is capable of measuring distances accurately to 250 cm. The sensor is mounted on a servo mechanism that can point the sensor in any direction ahead of the robot. The robot moves through use of two wheels that can be independently controlled by motors. Each wheel has an encoder using which the robot can issue commands for a wheel to move a fixed number of steps. The robot also has a third castor wheel that can move in any direction, but is not powered. The robot will be given commands to make it move and it can sense its surroundings using the ultrasonic sensor.
+The robot used for this implementation is based on a Raspberry Pi and is manufactured and sold by Dexter Industries \cite{dexter}. The robot is equipped with an ultrasonic sensor that is capable of measuring distances accurately to 250 cm. The sensor is mounted on a servo mechanism that can point the sensor in any direction ahead of the robot. The robot moves through use of two wheels that can be independently controlled by motors. Each wheel has an encoder using which the robot can issue commands for a wheel to move a fixed number of steps. The robot also has a third castor wheel that can move in any direction, but is not powered. The robot will issue commands to move and it can sense its surroundings using the ultrasonic sensor.
 \subsection{EKF SLAM}
 A Kalman filter is a Gaussian filter algorithm that can use two Gaussian distributions for a computed value and merge them together to form a distribution that has lesser variance than either of the two distributions. A Kalman filter however only works in the case of systems where the mechanics are linear. This is where the Extended Kalman Filter (EKF) comes in. An EKF uses an approximation to find the resultant distribution after a prior distribution is transformed by a non-linear function. The robot movement and landmark sensing is governed by trigonometric functions that are based on the angle of the robot orientation. These functions are non-linear since they are trigonometric.\\
 
-The robot will compute its expected position based on its prior position and the movement command. This is the prediction step. It will also make independent estimates of its position using the bearing and range to known landmarks returned by its ultrasonic sensor. These two measurements will be combined through use of an EKF in such a way that the position uncertainty is reduced. The Kalman Gain or the reduction in the robot position uncertainty is inversely proportional to the sensor uncertainty. The better the sensor, the higher will be the Kalman Gain and the less uncertainty there will be in the robot position\cite{stachniss}.
+The robot will compute its expected position based on its prior position and the movement command. This is the prediction step. It will also make independent estimates of its position using the bearing and range to known landmarks returned by its ultrasonic sensor. These two measurements will be combined through use of an EKF in such a way that the position uncertainty is reduced. The Kalman Gain or the reduction in the robot position uncertainty is inversely proportional to the sensor uncertainty. The better the sensor, the higher will be the Kalman Gain and the less uncertainty there will be in the robot position  \cite{stachniss}.
 
 \section{Problem Statement}
 \subsection{Location Uncertainty}
@@ -727,7 +727,7 @@ Figure \ref{ObstacleLikelihood} shows a robot that is sensing three obstacles sh
 \label{ObstacleLikelihood}
 \end{figure}
 
-\subsection{Implementing the EKF}
+\section{Results}
 
 The robot manufacturer provides a Python library with movement control and rangefinder functions. The movement control functions provide for precision movement using encoders disks that are attached to the wheel axle. The robot wheels can be independently made to go forward or backward a specific number of encoder steps. The rangefinder can be pointed at any angle in front of the robot and will return the distance in centimeters to an obstacle that the sensor is pointing to. The python NumPy library was for matrix and array operations.\\
 
@@ -745,18 +745,18 @@ The robot movement equations represented by function $g$ mentioned in line $2$ o
 
 The movement Jacobian can be found by deriving the parting derivative of the motion equation with respect to each component of the robot pose. This derivation is given in section \ref{sssec:num3}. This Jacobian can now be used in line $3$ of the EKF algorithm.\\
 
-The ultrasonic rangefinder on the robot did not perform well and reported the size of an obstacle as $4.8$ times of what it actually was. This was probably a combination of the low grade of the sensor and the fact that ultrasonic rangefinders are not known to be accurate. As a result of the obstacles being reported as almost five times larger than what they actually were, and because of the need to space the obstacles apart by at least this width plus the sensing uncertainty times two, the testing of the robot did not progress beyond the location prediction stage. This was due to available space limitations of where the robot could be tested. Due to this reason the correction step could not be implemented.
-
-\section{Results}
+The ultrasonic rangefinder on the robot did not perform well and reported the size of an obstacle as $4.8$ times of what it actually was. This was probably a combination of the low grade of the sensor and the fact that ultrasonic rangefinders are not known to be accurate. As a result of the obstacles being reported as almost five times larger than what they actually were, and because of the need to space the obstacles apart by at least this width plus the sensing uncertainty times two, the testing of the robot did not progress beyond the location prediction stage. This was due to available space limitations of where the robot could be tested. In addition to this, the process of associating new observations to previously seen landmarks became impossible with the nearest neighbor method. The reason is that the nearest neighbor association method relies on closeness of the previously observed landmarks to their new expected location based on the robot movement. Since the sensing uncertainty is so large, it made the association with known landmarks impossible. Due to this, the correction step could not be implemented.\\
 
 The robot is able to move around and navigate through an obstacle course. However, as described above in the previous section, the prediction step of the EKF SLAM process was not implemented.\\
 
-However, the project has not been a total loss. I have a very good understanding of the EKF SLAM process and had to get re-acquainted with probability theory, conditional probability, Bayes Rule, multivariate normal distributions, covariance and covariance matrices, Kalman and Extended Kalman Filters and the EKF SLAM process as a whole. This was a non-trivial topic to grasp and needed a lot of reading and understanding.
+The project has not been a total loss though. I have a very good understanding of the EKF SLAM process and had to get re-acquainted with probability theory, conditional probability, Bayes Rule, multivariate normal distributions, covariance and covariance matrices, Kalman and Extended Kalman Filters and the EKF SLAM process as a whole. This was a non-trivial topic to grasp and needed a lot of reading and understanding.
 
 \section{Discussion}
 
-A very important concept in EKF SLAM is the use of a Kalman or Extended Kalman Filter. These filters are used in places like the Google car, rockets, missiles, tracking of objects and precise movements of robotic arms. Kalman filters can even be used for estimating the charge in a rechargeable battery. 
+A very important concept in EKF SLAM is the use of a Kalman or Extended Kalman Filter. These filters are used in places like the Google car, rockets, missiles, tracking of objects and precise movements of robotic arms. Kalman filters can even be used for estimating the charge in a rechargeable battery.\\
 
+A Kalman filter can essentially work in an environment where the data contains added noise. It can attenuate the noise and output data with less noise. As described earlier, a Kalman filter uses a model of the system to compute its predicted state along with the associated uncertainty in the state. Then it will use an independent mechanism to measure the state. Using 
+the predicted uncertainty in the state and the expected noise in the measurement process, it will compute the Kalman Gain. The lower the predicted uncertainty in the state and the expected noise in the measurement process, the higher will be the Kalman Gain. The Kalman Gain is then used to reduce the uncertainty in the system state and apply a correction to the mean or expected system state.
 
 \section{Conclusions and Future work}
 The accuracy of the rangefinder was the main obstacle encountered in this project. A better sensor can probably be used to obtain a more accurate obstacle signature and continue with the project. The Xbox Kinect sensor has a camera and rangefinder built into one sensor and promises more accuracy in measurements. A Kinect would be the next step in continuing with this project.
@@ -1006,7 +1006,7 @@ where $\theta'$ is the angle the robot is made to rotate by.
 
 The movement Jacobian represented by $G_t$ in line $3$ of the EKF algorithm can be obtained by finding the partial derivative of the movement function $g$ \cite{thrun}. In the case of the move forward, the Jacobian is given by
 
-\begin{equation}\label{MovementJacobian}
+\begin{equation}\label{MovementJacobian1}
 \begin{aligned}
 G_t &= I + \frac{\partial}{\partial(x~y~\theta)^T}
 \begin{pmatrix}
@@ -1025,7 +1025,7 @@ G_t &= I + \frac{\partial}{\partial(x~y~\theta)^T}
 
 where $I$ is the identity matrix. For the rotate in place operation, the Jacobian is given by
 
-\begin{equation}\label{MovementJacobian}
+\begin{equation}\label{MovementJacobian2}
 \begin{aligned}
 G_t &= I + \frac{\partial}{\partial(x~y~\theta)^T}
 \begin{pmatrix}

@@ -170,6 +170,21 @@ Shown above is an example of the use of a Kalman filter to reduce uncertainty. A
   The uncertainty reduction process can be visualized as shown above as a network of springs connecting all landmarks together or as a rubber sheet in which all landmarks are embedded. An observation in a neighborhood acts like a displacement to a spring system or rubber sheet such that its effect is great in the neighborhood and, dependent on local stiffness (correlation) properties, diminishes with distance to other landmarks. As the robot moves through this environment and takes observations of the landmarks, the springs become increasingly (and monotonically) stiffer. In the limit, a rigid map of landmarks or an accurate relative map of the environment is obtained. As the map is built, the location accuracy of the robot measured relative to the map is bounded only by the quality of the map and relative measurement sensor. In the theoretical limit, robot relative location accuracy becomes equal to the localization accuracy achievable with a given map.
 </p>
 
+<table style="border-collapse: collapse;">
+  <caption align="bottom">
+    (a) Example environment with three obstacles in gray. The robot is located towards the bottom of the figure and takes a measurement $z_t^k$ as indicated by the dashed line. (b) Likelihood field for this obstacle configuration. The darker the location, the less likely is the robot to perceive an obstacle there [4].
+  </caption>
+  <tr>
+    <td>
+      <img src="images/ObstacleLikelyhood.png" alt="Spring network analogy" style="width:600px;height:600px;"/>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Figure (a) above shows a robot that is sensing three obstacles shown in gray in. Figure (b) shows the likelihood of the robot sensing the obstacles. The darker the location, the less likely is the robot to perceive an obstruction there. The sharp definitions of the actual obstacles are turned into blurred images that represent the uncertainty in the measurement of the obstacle coordinates and the signature. The higher the Kalman Gain, the less blurred the perceived obstacles will be.
+</p>
+
 <h3>
 <a id="ImplementationDetails" class="anchor" href="#ImplementationDetails" aria-hidden="true"><span class="octicon octicon-link"></span></a>Implementation Details</h3>
 

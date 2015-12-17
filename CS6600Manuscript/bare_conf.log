@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.12.12)  15 DEC 2015 22:48
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.12.12)  16 DEC 2015 19:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -417,7 +417,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 449--450
 
  []
 
-
+[2 <./figures/LostRobot.pdf>]
 Overfull \hbox (10.0pt too wide) in paragraph at lines 515--528
 []$[]$ 
  []
@@ -432,7 +432,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 515--528
 
  []
 
-[2 <./figures/LostRobot.pdf>]
+
 Underfull \hbox (badness 10000) in paragraph at lines 529--530
 
  []
@@ -444,6 +444,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 531--532
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 537--538
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 551--552
 
  []
 
@@ -627,6 +632,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 687--688
 
 Underfull \hbox (badness 10000) in paragraph at lines 699--700
 
+ []
+
+
+Underfull \hbox (badness 3219) in paragraph at lines 701--702
+[]\OT1/ptm/m/n/10 In line $\OT1/cmr/m/n/10 4$\OT1/ptm/m/n/10 , when the lo-ca-t
+ion un-cer-tainty or sen-sor
  []
 
 
@@ -835,7 +846,7 @@ Here is how much of TeX's memory you used:
  7683 multiletter control sequences out of 15000+600000
  38484 words of font info for 75 fonts, out of 8000000 for 9000
  960 hyphenation exceptions out of 8191
- 51i,15n,27p,1954b,334s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 51i,15n,27p,1952b,334s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texli
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dis
@@ -854,7 +865,7 @@ mf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist
 tmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive
 /texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on bare_conf.pdf (9 pages, 881814 bytes).
+Output written on bare_conf.pdf (9 pages, 881851 bytes).
 PDF statistics:
  194 PDF objects out of 1000 (max. 8388607)
  137 compressed objects within 2 object streams
